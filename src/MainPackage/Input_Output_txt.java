@@ -29,6 +29,5 @@ public class Input_Output_txt {
 		
 	}// ENDE Methode erzeugeTestdaten_txtDatei()
 	
-	
 
-}// ENDE Klasse INPUT_OUTPUT_TXT
+}// ENDE Klasse Input_Output_txt

@@ -36,7 +36,7 @@ public class MAIN {
 			System.out.println("Datei nicht vorhanden");
 		}
 		
-		// Array für die Objekten erstellen		
+		// ArrayList für die Objekten erstellen		
 		ArrayList<Person> listePersonen = new ArrayList<Person>();				
 		
 		// Zählervariable für die zu erstellenden Objekte
@@ -57,19 +57,18 @@ public class MAIN {
 		
 		// Erstelle eine ArrayList mit den Statements zum einfügen der Objekte in die DB
 		int i_id = 1;
-		ArrayList<String> statements = new ArrayList<String>();
+		ArrayList<String> statements_DB_fuellen = new ArrayList<String>();
 		for (Person person : listePersonen) {
 			StringBuilder sb = new StringBuilder("INSERT INTO personen(p_id, p_vorname, p_nachname, p_alter) VALUES");
 			sb.append(MessageFormat.format("({0}, {1}, {2}, {3})", 
 					i_id, Datenbank.sqlString(person.getVorname()), Datenbank.sqlString(person.getNachname()), person.getAlter()));			
-			String statement = sb.toString();
-			//String statement = MessageFormat.format("INSERT INTO personen(p_id, p_vorname, p_nachname, p_alter) VALUES({0},\'{1}\',\'{2}\',{3})",i_id, person.getVorname(), person.getNachname(), person.getAlter());
-			statements.add(statement);
+			String statement = sb.toString();			
+			statements_DB_fuellen.add(statement);
 			i_id++;
 		}
 		
 		// Führe die Statements aus
-		Postgre_java_conn.fuehreXStatementsAus(statements);
+		Postgre_java_conn.fuehreXStatementsAus(statements_DB_fuellen);
 		
 		// Konsolenausgabe aller Daten in der Tabelle 'personen'
 		System.out.println("Ausgabe aller Daten in der Tabelle 'personen':\n");

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Datenbank {
 	
+		//******************************************** Attribute ************************************************
+	
 		// Datenbank URL
 		private String DB_URL;
 		// Datenbank Zugangsdaten
@@ -15,96 +17,93 @@ public class Datenbank {
 		private Connection conn = null;
 		private Statement stmt = null;
 		
+		//***************************************** Konstruktoren ***********************************************
+		
+		// default Datenbank
 		public Datenbank() {
 			this.DB_URL = "jdbc:postgresql://localhost:5432/java_connection_DB";
 			this.DB_USER = "postgres";
 			this.DB_PASS = "passwort";
 		}
 		
+		// explizite Datenbank
 		public Datenbank(String DB_URL, String DB_USER, String DB_PASS) {
 			this.DB_URL = DB_URL;
 			this.DB_USER = DB_USER;
 			this.DB_PASS = DB_PASS;
 		}
 		
-//		public void verbindung_herrstellen() {
-//			try {
-//				this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-//			
-//			} catch (SQLException e) {				
-//				e.printStackTrace();
-//			}
-//		}
+		//******************************************* Methoden ****************************************************
 		
-			
+		private void verbindung_herstellen() {
+			try {
+				System.out.println("\nVerbinde mit Datenbank...");
+				this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+				System.out.println("Erfolgreich mit Datenbank verbunden!");
+			} catch (SQLException e) {				
+				e.printStackTrace();
+			}
+		}
+		
+		private void verbindung_trennen() {
+			try {
+				conn.close();
+				System.out.println("\nVerbindung mit Datenbank wurde getrennt!\n");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		public void fuehre1StatementAus(String sqlBefehl) {
-			Connection conn = null;
-			Statement stmt = null;
+			
+			verbindung_herstellen();
 			
 			try {
-				// 1. Verbindung herstellen
-				System.out.println("\nVerbinde mit Datenbank...");
-				conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-				System.out.println("Erfolgreich mit Datenbank verbunden!");
-				
-				// 2. Führe eine Statement aus
 				System.out.println("Fuehre SQL Statement aus...");
 				stmt = conn.createStatement();						
 				stmt.execute(sqlBefehl);
 				System.out.println("Statement erfolgreich ausgefuehrt!");
-				
-				// 3. Verbindung trennen
 				stmt.close();
-				conn.close();
-				System.out.println("\nVerbindung mit Datenbank wurde getrennt!\n");
-				
-				
+			
 			} catch(Exception e) {
 				System.out.println("Es ist ein Fehler aufgetreten");
 			}
 			
+			verbindung_trennen();
+			
 		}// ENDE Methode fuehre1StatementAus()
 		
 		public void fuehreXStatementsAus(ArrayList<String> befehle) {
-			Connection conn = null;
-			Statement stmt = null;
+			
+			verbindung_herstellen();
 			
 			try{
-				// 1. Verbindung herstellen
-				System.out.println("\nVerbinde mit Datenbank...");
-				conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-				System.out.println("Erfolgreich mit Datenbank verbunden!\n");
-				
-				// 2. Führe Statement aus
 				System.out.println("Fuehre SQL Statements aus...");
 				for (String befehl : befehle) {
 					System.out.println(befehl);
 					stmt = conn.createStatement();				
 					stmt.execute(befehl);
-					System.out.println("Statement erfolgreich ausgefuehrt!");				
+					System.out.println("Statement erfolgreich ausgefuehrt!");
+					stmt.close();
 				}
-				
-				// 3. Verbindung trennen
-				stmt.close();
-				conn.close();
-				System.out.println("\nVerbindung mit Datenbank getrennt!\n");
-				
 			} catch(Exception e) {
 				System.out.println("Es ist ein Fehler aufgetreten");
 			}
+			
+			verbindung_trennen();
 				
 		}// ENDE Methode fuehreXStatementsAus()
 		
+		
 		public void ausgabeTabelle(String tabelle) {
 			
-			final String pattern = "000";
-			final DecimalFormat zahlenFormat = new DecimalFormat(pattern);	
+			final String pattern_id = "000";
+			final DecimalFormat zahlenFormat = new DecimalFormat(pattern_id);	
 			
-			Connection conn = null;
-			Statement stmt = null;
+			verbindung_herstellen();
 			
-			try{
-				conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+			try{				
 				stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT * FROM " + tabelle + " ORDER BY p_alter"); // Sortierung nach Alter
 				while (rs.next()) {
@@ -116,16 +115,18 @@ public class Datenbank {
 					System.out.println();
 				}
 				rs.close();
-				stmt.close();
-				conn.close();
+				stmt.close();				
 				
 			} catch (Exception e) {
 				System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 		         System.exit(0);
 			}
 			
+			verbindung_trennen();
+			
 		}// ENDE Methode ausgabeTabelle()
 		
+		// Methode um einen String mit einfachen Anführungszeichen zu umgeben
 		public static String sqlString(String eingabe)
 		{
 			StringBuilder sb = new StringBuilder(eingabe);
@@ -135,4 +136,4 @@ public class Datenbank {
 			return sb.toString();
 		}
 
-}// ENDE Klasse DB_Verbindung
+}// ENDE Klasse Datenbank
