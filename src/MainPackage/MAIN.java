@@ -22,7 +22,7 @@ public class MAIN {
 		Postgre_java_conn.fuehre1StatementAus("DELETE FROM personen");
 		
 		// Erzeuge Testdaten
-		File testInputDaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\textdateien", "testdaten.txt");				
+		File testInputDaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\textdateien", "INPUT_testdaten.txt");				
 		Input_Output_txt.erzeugeTestdaten_txtDatei(testInputDaten, 200);		
 		
 		// erstelle Scanner Objekt
