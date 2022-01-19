@@ -1,4 +1,4 @@
-package MainPackage;
+package mainPackage;
 
 public class Person {
 	
@@ -45,4 +45,4 @@ public class Person {
 	}	
 	
 	
-}// Person Klasse
+}// ENDE Klasse Person
