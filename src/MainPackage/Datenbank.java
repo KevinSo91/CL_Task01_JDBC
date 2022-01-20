@@ -126,7 +126,7 @@ public class Datenbank {
 			
 		}// ENDE Methode ausgabeTabelle()
 		
-		// Methode um einen String mit einfachen Anführungszeichen zu umgeben
+		// Methode um einen String mit einfachen Anführungszeichen zu umgeben (benoetigt fuer SQL-Statements)
 		public static String sqlString(String eingabe)
 		{
 			StringBuilder sb = new StringBuilder(eingabe);

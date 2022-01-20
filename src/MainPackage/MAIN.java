@@ -16,12 +16,12 @@ public class MAIN {
 		System.out.println("\nDas Programm startet...\n");
 		
 		// Erstelle ein Objekt für eine Verbindung mit einer Datenbank
-		Datenbank Postgre_java_conn = new Datenbank(); // Leerer Konstruktor -> default Datenbank (Siehe Klasse 'DB_Verbindung')
+		Datenbank Postgre_java_conn = new Datenbank(); // Leerer Konstruktor -> default Datenbank (Siehe Klasse 'Datenbank')
 		
 		// Lösche alle Daten aus der Tabelle 'personen'
 		Postgre_java_conn.fuehre1StatementAus("DELETE FROM personen");
 		
-		// Erzeuge Testdaten
+		// Erzeuge Testdaten zum einlesen
 		File testInputDaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\textdateien", "INPUT_testdaten.txt");				
 		Input_Output_txt.erzeugeTestdaten_txtDatei(testInputDaten, 200);		
 		
