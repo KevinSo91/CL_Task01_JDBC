@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.ArrayList;
-//import java.util.Scanner;
 import java.text.*;
 
 
@@ -14,7 +13,7 @@ import java.text.*;
 public class MAIN {	
 	
 	// main Methode
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
 		System.out.println("\nDas Programm startet...\n");
 		
@@ -25,7 +24,7 @@ public class MAIN {
 		Postgre_java_conn.fuehre1StatementAus("DELETE FROM personen");
 		
 		// Erzeuge Testdaten zum einlesen
-		File input_Testdaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\textdateien", "INPUT_testdaten.txt");				
+		File input_Testdaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Text", "INPUT_testdaten.txt");				
 		Input_Output_txt.erzeugeTestdaten_txtDatei(input_Testdaten, 200);		
 		
 		// ArrayList für die Objekten erstellen		
@@ -87,7 +86,7 @@ public class MAIN {
 		System.out.println("Ausgabe aller Daten in der Tabelle 'personen':\n");
 		Postgre_java_conn.ausgabeTabelle("personen");
 		
-		
+		ExcelMain.schreibePersonenInExcel(listePersonen);
 		
 		System.out.println("\nDas Programm wird beendet...");
 		
