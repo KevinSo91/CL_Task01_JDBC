@@ -2,8 +2,11 @@ package mainPackage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.util.Scanner;
+//import java.util.Scanner;
 import java.text.*;
 
 
@@ -22,34 +25,44 @@ public class MAIN {
 		Postgre_java_conn.fuehre1StatementAus("DELETE FROM personen");
 		
 		// Erzeuge Testdaten zum einlesen
-		File testInputDaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\textdateien", "INPUT_testdaten.txt");				
-		Input_Output_txt.erzeugeTestdaten_txtDatei(testInputDaten, 200);		
-		
-		// erstelle Scanner Objekt
-		Scanner scan = null;
-		
-		// lese Datei 'testdaten'(Objekt 'testdaten') ein
-		try {
-			scan = new Scanner(testInputDaten);
-			//scan.close();
-		} catch (FileNotFoundException e) {			
-			System.out.println("Datei nicht vorhanden");
-		}
+		File input_Testdaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\textdateien", "INPUT_testdaten.txt");				
+		Input_Output_txt.erzeugeTestdaten_txtDatei(input_Testdaten, 200);		
 		
 		// ArrayList für die Objekten erstellen		
-		ArrayList<Person> listePersonen = new ArrayList<Person>();				
+		ArrayList<Person> listePersonen = new ArrayList<Person>();		
 		
-		// Zählervariable für die zu erstellenden Objekte
-		int i = 0;
-		// erstelle für jede Zeile ein Objekt der Klasse 'Person' und füge es der Liste 'listePersonen' hinzu
-		while (scan.hasNext()) {
-			String vorname = scan.next();
-			String nachname = scan.next();    // scan.next(String pattern) -> String auf Struktur prüfen
-			int alter = scan.nextInt();
-						
-			listePersonen.add(new Person(vorname, nachname, alter));
-			i++;
+		
+		// lese Datei 'INPUT_testdaten.txt'(Objekt 'testdaten') ein und übertrage die Daten in Objekte
+		try {
+			// erstelle FileReader / Buffered Reader Objekt
+			FileReader reader = new FileReader(input_Testdaten);
+			BufferedReader bufferedReader = new BufferedReader(reader);
+			
+			// Zählervariable für die zu erstellenden Objekte
+			int i = 0;
+			// erstelle für jede Zeile ein Objekt der Klasse 'Person' und füge es der Liste 'listePersonen' hinzu
+			String zeile;
+			while ((zeile = bufferedReader.readLine()) != null) {
+				String[] datensatz = zeile.split(" ");
+				String vorname = datensatz[0];
+				String nachname = datensatz[1];
+				int alter = Integer.parseInt(datensatz[2]);
+							
+				listePersonen.add(new Person(vorname, nachname, alter));
+				i++;
+			}
+			reader.close();
+			bufferedReader.close();
+			
+		} catch (FileNotFoundException e) {			
+			System.out.println("Datei nicht vorhanden");
+		} catch (NumberFormatException e) {			
+			e.printStackTrace();
+		} catch (IOException e) {			
+			e.printStackTrace();
 		}
+		
+		
 		
 		// Gib die Attribute der einzelnen Objekte in 'listePersonen' in der Konsole aus
 		System.out.println("Ausgabe der Objekte in 'listePersonen':\n");
