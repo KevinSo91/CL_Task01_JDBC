@@ -55,6 +55,35 @@ public class Datenbank {
 			}
 		}
 		
+		public void schreibeObjekteInDatenbank(ArrayList<Person> listePersonen) throws SQLException {
+			
+			verbindungHerstellen();
+			
+			System.out.println("\nSchreibe Personen in Datenbank...\n");
+			
+			String stmt = "INSERT INTO personen(p_id, p_vorname, p_nachname, p_alter) VALUES(?, ?, ?, ?)";
+			PreparedStatement preparedStatement = conn.prepareStatement(stmt);
+			int i_id = 1;
+			
+			System.out.println("Starte Schleife...");
+			
+			for(Person person : listePersonen) {
+				preparedStatement.setInt(1, i_id);
+				preparedStatement.setString(2, person.getVorname());
+				preparedStatement.setString(3, person.getNachname());
+				preparedStatement.setInt(4, person.getAlter());
+				
+				System.out.println("Führe PreparedStatement aus...");
+				
+				preparedStatement.executeUpdate();
+				i_id++;
+			}
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			verbindungTrennen();
+		}
+		
 		// Methode um genau 1 Statement auszuführen
 		public void fuehre1StatementAus(String sqlBefehl) {
 			

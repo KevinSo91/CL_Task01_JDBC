@@ -21,23 +21,39 @@ public class MAIN {
 		
 		System.out.println("\nDas Programm startet...\n");
 		
-		// Erstelle ein Objekt für eine Verbindung mit einer Datenbank
+		// Erzeuge Datei mit Testdaten
+		TextDatei testdatei = new TextDatei("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\testordner", "testdatei");
+		testdatei.schreibeTestdaten(100);
+		
+		// ArrayList für die Objekten deklarieren		
+		ArrayList<Person> listePersonen = new ArrayList<Person>();
+		
+		// Daten aus Testdatei als Objekte in 'listePersonen' instanziieren
+		testdatei.schreibePersonenInObjekte(listePersonen);		
+				
+		// Erstelle ein Objekt für eine Verbindung zu einer Datenbank
 		Datenbank PostgreJavaConn = new Datenbank(); // Leerer Konstruktor -> default Datenbank (Siehe Klasse 'Datenbank')
 		
 		// Lösche alle Daten aus der Tabelle 'personen'
 		PostgreJavaConn.fuehre1StatementAus("DELETE FROM personen");
 		
-		// Erzeuge Testdaten zum einlesen
-		File inputTestdaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Text", "INPUT_Testdaten_Personen.txt");				
-		TextDatei.erzeugeTestdatenTxtDatei(inputTestdaten, 10);		
+		// Alle Objekte aus 'listePersonen' in Datenbank einfügen
+		PostgreJavaConn.schreibeObjekteInDatenbank(listePersonen);
 		
-		// ArrayList für die Objekten erstellen		
-		ArrayList<Person> listePersonen = new ArrayList<Person>();
 		
-		// Methode zum schreiben der Daten als Objekte in ArrayList
-		TextDatei.schreibePersonenInObjekte(inputTestdaten, listePersonen);
 		
-		listePersonen.forEach((person) -> person.infoAusgeben());
+		
+		
+//		// Erzeuge Testdaten zum einlesen
+//		File inputTestdaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Text", "INPUT_Testdaten_Personen.txt");				
+//		TextDatei.erzeugeTestdatenTxtDatei(inputTestdaten, 10);		
+//		
+//		
+//		
+//		// Methode zum schreiben der Daten als Objekte in ArrayList
+//		TextDatei.schreibePersonenInObjekte(inputTestdaten, listePersonen);
+//		
+//		listePersonen.forEach((person) -> person.infoAusgeben());
 		
 		
 		

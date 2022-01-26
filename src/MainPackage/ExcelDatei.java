@@ -24,7 +24,7 @@ public class ExcelDatei {
 		
 		System.out.println("Erstelle Excel-Datei...");
 		
-		Workbook mappe_Personen = new XSSFWorkbook();
+		Workbook mappe_Personen = new XSSFWorkbook(); // xlsx-Format (ab 2003)
 		Sheet tabelle_Personen = mappe_Personen.createSheet(tabelle);
 		// Erstelle Kopfzeile
 		Row kopfZeile = tabelle_Personen.createRow(0);

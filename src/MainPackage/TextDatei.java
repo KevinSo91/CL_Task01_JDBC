@@ -16,17 +16,38 @@ public class TextDatei {
 	
 	private final String fileLocation;
 	private final String fileName;
+	//private final String fileLocationAndName;
+	private final File txtFile;
 	
 	
 	//***************************************** Konstruktoren ***********************************************
 	
 	public TextDatei(String location, String name) {
 		this.fileLocation = location;
-		this.fileName = name;		
+		this.fileName = name + ".txt";
+		//this.fileLocationAndName = fileLocation + "\\" + fileName;
+		this.txtFile = new File(this.fileLocation, this.fileName);
 	}
 	
 	//******************************************* Methoden ****************************************************
 
+	
+	public File getTxtFile() {
+		return this.txtFile;
+	}
+	
+	public void schreibeTestdaten(int anzahlZeilen) throws IOException {
+		FileWriter fileWriter = new FileWriter(this.txtFile);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		for(int i = 0; i < anzahlZeilen; i++ ) {
+			Random random = new Random();
+			int zufallAlter = random.nextInt(68-18)+18; // (max(exklusiv)-min(inklusiv))-min
+			String zeile = "Vorname" + i  + " Nachname" + i + " " + zufallAlter + "\n";
+			bufferedWriter.write(zeile);
+		}
+		bufferedWriter.close();
+		fileWriter.close();
+	}
 	
 	public static void erzeugeTestdatenTxtDatei(File datei, int anzahlZeilen) {
 		
@@ -53,12 +74,12 @@ public class TextDatei {
 		
 	}// ENDE Methode erzeugeTestdaten_txtDatei()
 	
-	public static void schreibePersonenInObjekte(File inputTxtDatei, ArrayList<Person> outputArrayList) {
+	public void schreibePersonenInObjekte(ArrayList<Person> outputArrayList) {
 	// lese TXT Datei ein und (Objekt 'testdaten') ein und übertrage die Daten in ein ArrayListe von Objekte
 			try {
 				// erstelle FileReader / Buffered Reader Objekt
-				FileReader reader = new FileReader(inputTxtDatei);
-				BufferedReader bufferedReader = new BufferedReader(reader);
+				FileReader fileReader = new FileReader(this.txtFile);
+				BufferedReader bufferedReader = new BufferedReader(fileReader);
 				
 				// Zählervariable für die zu erstellenden Objekte
 				int i = 0;
@@ -73,7 +94,7 @@ public class TextDatei {
 					outputArrayList.add(new Person(vorname, nachname, alter));
 					i++;
 				}
-				reader.close();
+				fileReader.close();
 				bufferedReader.close();
 				
 			} catch (FileNotFoundException e) {			
