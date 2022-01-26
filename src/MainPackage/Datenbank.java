@@ -35,7 +35,8 @@ public class Datenbank {
 		
 		//******************************************* Methoden ****************************************************
 		
-		private void verbindung_herstellen() {
+		// Methode um mit Datenbank zu verbinden
+		private void verbindungHerstellen() {
 			try {
 				System.out.println("\nVerbinde mit Datenbank...");
 				this.conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
@@ -45,7 +46,7 @@ public class Datenbank {
 			}
 		}
 		
-		private void verbindung_trennen() {
+		private void verbindungTrennen() {
 			try {
 				conn.close();
 				System.out.println("\nVerbindung mit Datenbank wurde getrennt!\n");
@@ -54,10 +55,10 @@ public class Datenbank {
 			}
 		}
 		
-		
+		// Methode um genau 1 Statement auszuführen
 		public void fuehre1StatementAus(String sqlBefehl) {
 			
-			verbindung_herstellen();
+			verbindungHerstellen();
 			
 			try {
 				System.out.println("Fuehre SQL Statement aus...");
@@ -70,13 +71,14 @@ public class Datenbank {
 				System.out.println("Es ist ein Fehler aufgetreten");
 			}
 			
-			verbindung_trennen();
+			verbindungTrennen();
 			
 		}// ENDE Methode fuehre1StatementAus()
 		
+		// Methode um beliebig viele Statements (aus ArrayList) auszuführen
 		public void fuehreXStatementsAus(ArrayList<String> befehle) {
 			
-			verbindung_herstellen();
+			verbindungHerstellen();
 			
 			try{
 				System.out.println("Fuehre SQL Statements aus...");
@@ -91,7 +93,7 @@ public class Datenbank {
 				System.out.println("Es ist ein Fehler aufgetreten");
 			}
 			
-			verbindung_trennen();
+			verbindungTrennen();
 				
 		}// ENDE Methode fuehreXStatementsAus()
 		
@@ -101,7 +103,7 @@ public class Datenbank {
 			final String pattern_id = "000";
 			final DecimalFormat zahlenFormat = new DecimalFormat(pattern_id);	
 			
-			verbindung_herstellen();
+			verbindungHerstellen();
 			
 			try{				
 				stmt = conn.createStatement();
@@ -122,9 +124,34 @@ public class Datenbank {
 		         System.exit(0);
 			}
 			
-			verbindung_trennen();
-			
+			verbindungTrennen();
+						
 		}// ENDE Methode ausgabeTabelle()
+		
+		
+		// Methode um ein SELECT nach Alter auszuführen (als PreparedStatement) -> Ausgabe in Konsole
+		public void ausgabePersonenMitAlterX(int gesuchtesAlter) throws SQLException {
+			
+			verbindungHerstellen();
+			
+			// Erstelle Statement mit Parametern
+			String statement = "SELECT p_vorname, p_nachname FROM personen WHERE p_alter=?";
+			// Erstelle PraparedStatement
+			PreparedStatement preparedStatement = conn.prepareStatement(statement);
+			// Setze Parameter ein
+			preparedStatement.setInt(1, gesuchtesAlter);
+			// Führe preparedStatement aus
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			System.out.println("\nAlle Personen in dem Alter von " + gesuchtesAlter + " Jahren:\n");
+			// Gebe Ergebnisse in Konsole aus
+			while(rs.next()) {
+				System.out.println(rs.getString("p_vorname") + " " + rs.getString("p_nachname"));
+			}
+			
+			
+			verbindungTrennen();
+		}
 		
 		// Methode um einen String mit einfachen Anführungszeichen zu umgeben (benoetigt fuer SQL-Statements)
 		public static String sqlString(String eingabe)

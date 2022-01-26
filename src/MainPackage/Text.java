@@ -6,9 +6,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Random;
 
-public class Input_Output_txt {
+public class Text {
 	
-	public static void erzeugeTestdaten_txtDatei(File datei, int anzahlZeilen) {
+	public static void erzeugeTestdatenTxtDatei(File datei, int anzahlZeilen) {
 		
 		
 		try {

@@ -8,13 +8,16 @@ public class Person {
 	private int alter;
 	
 	// Konstruktoren 
+	
 	public Person(String vorname, String nachname, int alter) {
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.alter = alter;
 		
 	}
+		
 	// Methoden
+	
 	public String getVorname() {
 		return this.vorname;
 	}	

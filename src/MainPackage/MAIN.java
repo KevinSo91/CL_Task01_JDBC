@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ import java.text.*;
 public class MAIN {	
 	
 	// main Methode
-	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidFormatException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidFormatException, SQLException {
 		
 		System.out.println("\nDas Programm startet...\n");
 		
@@ -28,7 +29,7 @@ public class MAIN {
 		
 		// Erzeuge Testdaten zum einlesen
 		File input_Testdaten = new File("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Text", "INPUT_Testdaten_Personen.txt");				
-		Input_Output_txt.erzeugeTestdaten_txtDatei(input_Testdaten, 200);		
+		Text.erzeugeTestdatenTxtDatei(input_Testdaten, 200);		
 		
 		// ArrayList für die Objekten erstellen		
 		ArrayList<Person> listePersonen = new ArrayList<Person>();		
@@ -90,16 +91,18 @@ public class MAIN {
 		Postgre_java_conn.ausgabeTabelle("personen");
 		
 		// 
-		ExcelMain.schreibePersonenInExcel(listePersonen, 
+		Excel.schreibePersonenInExcel(listePersonen, 
 				"C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Excel\\OUTPUT_Mappe_Personen.xlsx", "Tabelle1");
 		
-		ExcelMain.erzeugeTestdaten_xlsxDatei("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Excel\\INPUT_Testdaten_Personen.xlsx",
+		Excel.erzeugeTestdaten_xlsxDatei("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Excel\\INPUT_Testdaten_Personen.xlsx",
 				50);		
 		
-		ExcelMain.lesePersonenAusExcel("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Excel\\INPUT_Testdaten_Personen.xlsx",
+		Excel.lesePersonenAusExcel("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Excel\\INPUT_Testdaten_Personen.xlsx",
 				"Tabelle1", listePersonen);
 		
 		listePersonen.forEach((person) -> person.infoAusgeben());
+		
+		Postgre_java_conn.ausgabePersonenMitAlterX(20);
 	
 		System.out.println("\nDas Programm wird beendet...");
 		
