@@ -17,7 +17,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
-public class Excel {
+public class ExcelDatei {
 	
 	
 	public static void schreibePersonenInExcel (ArrayList<Person> inputListePersonen, String outputDatei, String tabelle) throws FileNotFoundException, IOException {

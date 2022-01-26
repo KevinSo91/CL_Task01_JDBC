@@ -9,10 +9,10 @@ public class Datenbank {
 		//******************************************** Attribute ************************************************
 	
 		// Datenbank URL
-		private String DB_URL;
+		private final String DB_URL;
 		// Datenbank Zugangsdaten
-		private String DB_USER;
-		private String DB_PASS;
+		private final String DB_USER;
+		private final String DB_PASS;
 		
 		private Connection conn = null;
 		private Statement stmt = null;
@@ -97,7 +97,7 @@ public class Datenbank {
 				
 		}// ENDE Methode fuehreXStatementsAus()
 		
-		
+		// Methode um Tabelle auszugeben (Sortierung nach Alter)
 		public void ausgabeTabelle(String tabelle) {
 			
 			final String pattern_id = "000";
@@ -143,7 +143,7 @@ public class Datenbank {
 			// Führe preparedStatement aus
 			ResultSet rs = preparedStatement.executeQuery();
 			
-			System.out.println("\nAlle Personen in dem Alter von " + gesuchtesAlter + " Jahren:\n");
+			System.out.println("\nAlle Personen mit einem Alter von " + gesuchtesAlter + " Jahren:\n");
 			// Gebe Ergebnisse in Konsole aus
 			while(rs.next()) {
 				System.out.println(rs.getString("p_vorname") + " " + rs.getString("p_nachname"));
