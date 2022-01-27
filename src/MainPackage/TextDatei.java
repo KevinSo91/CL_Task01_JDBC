@@ -29,7 +29,7 @@ public class TextDatei {
 		this.txtFile = new File(this.fileLocation, this.fileName);
 	}
 	
-	//******************************************* Methoden ****************************************************
+	//******************************************* Methoden ***************************************************
 
 	
 	public File getTxtFile() {
@@ -110,7 +110,7 @@ public class TextDatei {
 			System.out.println("Ausgabe der Objekte in 'listePersonen':\n");
 			outputArrayList.forEach((person) -> person.infoAusgeben());
 	
-			}// ENDE schreibeDatenInObjekte()
+			}// ENDE schreibePersonenInObjekte()
 	
 
 }// ENDE Klasse Input_Output_txt

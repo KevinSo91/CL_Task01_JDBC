@@ -65,21 +65,19 @@ public class Datenbank {
 			PreparedStatement preparedStatement = conn.prepareStatement(stmt);
 			int i_id = 1;
 			
-			System.out.println("Starte Schleife...");
-			
 			for(Person person : listePersonen) {
 				preparedStatement.setInt(1, i_id);
 				preparedStatement.setString(2, person.getVorname());
 				preparedStatement.setString(3, person.getNachname());
 				preparedStatement.setInt(4, person.getAlter());
-				
-				System.out.println("Führe PreparedStatement aus...");
-				
+			
 				preparedStatement.executeUpdate();
 				i_id++;
 			}
 			
 			ResultSet rs = preparedStatement.executeQuery();
+			
+			System.out.println("\nPersonen erfolgreich in Datenbank geschrieben!\n");
 			
 			verbindungTrennen();
 		}
