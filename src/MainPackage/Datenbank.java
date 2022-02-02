@@ -55,7 +55,7 @@ public class Datenbank {
 			}
 		}
 		
-		public void schreibeObjekteInDatenbank(ArrayList<Person> listePersonen) throws SQLException {
+		public void schreibePersonenInDatenbank(ArrayList<Person> listePersonen) throws SQLException {
 			
 			verbindungHerstellen();
 			
@@ -81,6 +81,41 @@ public class Datenbank {
 			
 			verbindungTrennen();
 		}
+		
+		
+		public void schreibeTestPersonenInDatenbank(ArrayList<TestPerson> listePersonen) throws SQLException {
+			
+			verbindungHerstellen();
+			
+			System.out.println("\nSchreibe Personen in Datenbank...\n");
+			
+			String stmt = "INSERT INTO testpersonen(p_seq, p_first_name, p_last_name, p_age, p_street, p_city, p_state, p_zip, p_dollar, p_pick, p_date)"
+					+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement preparedStatement = conn.prepareStatement(stmt);
+						
+			for(TestPerson person : listePersonen) {
+				preparedStatement.setInt(1, person.getSeq());
+				preparedStatement.setString(2, person.getFirstName());
+				preparedStatement.setString(3, person.getLastName());
+				preparedStatement.setInt(4, person.getAge());
+				preparedStatement.setString(5, person.getStreet());
+				preparedStatement.setString(6, person.getCity());
+				preparedStatement.setString(7, person.getState());
+				preparedStatement.setInt(8, person.getZip());
+				preparedStatement.setString(9, person.getDollar());
+				preparedStatement.setString(10, person.getPick());
+				preparedStatement.setString(11, person.getDate());
+			
+				preparedStatement.executeUpdate();				
+			}
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			System.out.println("\nPersonen erfolgreich in Datenbank geschrieben!\n");
+			
+			verbindungTrennen();
+		}
+		
 		
 		// Methode um genau 1 Statement auszuführen
 		public void fuehre1StatementAus(String sqlBefehl) {

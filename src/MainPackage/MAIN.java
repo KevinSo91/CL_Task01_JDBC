@@ -17,24 +17,38 @@ public class MAIN {
 		
 		System.out.println("\nDas Programm startet...\n");
 		
-		// Erzeuge Datei mit Testdaten
-		TextDatei testdatei = new TextDatei("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\testordner", "testdatei");
-		testdatei.schreibeTestdaten(100);
+//		// Erzeuge Datei mit Testdaten
+//		TextDatei testdatei = new TextDatei("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\testordner", "testdatei");
+//		testdatei.schreibeTestdaten(100);
+//		
+//		// ArrayList für die Objekten deklarieren		
+//		ArrayList<Person> listePersonen = new ArrayList<Person>();
+//		
+//		// Daten aus Testdatei als Objekte in 'listePersonen' instanziieren
+//		testdatei.schreibePersonenInObjekte(listePersonen);		
+//				
+//		// Erstelle ein Objekt für eine Verbindung zu einer Datenbank
+//		Datenbank PostgreJavaConn = new Datenbank(); // Leerer Konstruktor -> default Datenbank (Siehe Klasse 'Datenbank')
+//		
+//		// Lösche alle Daten aus der Tabelle 'personen'
+//		PostgreJavaConn.fuehre1StatementAus("DELETE FROM personen");
+//		
+//		// Alle Objekte aus 'listePersonen' in Datenbank einfügen
+//		PostgreJavaConn.schreibeObjekteInDatenbank(listePersonen);
 		
-		// ArrayList für die Objekten deklarieren		
-		ArrayList<Person> listePersonen = new ArrayList<Person>();
+		ArrayList<TestPerson> listeTestpersonen = new ArrayList<TestPerson>();
 		
-		// Daten aus Testdatei als Objekte in 'listePersonen' instanziieren
-		testdatei.schreibePersonenInObjekte(listePersonen);		
-				
-		// Erstelle ein Objekt für eine Verbindung zu einer Datenbank
-		Datenbank PostgreJavaConn = new Datenbank(); // Leerer Konstruktor -> default Datenbank (Siehe Klasse 'Datenbank')
+		// Erstelle ein JSON-Objekt
+		JsonDatei testPersonen = new JsonDatei("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\input_output_Json", "testdata");
+		// Schreibe Test-Personen in Liste 'listeTestpersonen'
+		testPersonen.schreibeTestPersonenInObjekte(listeTestpersonen);
 		
+		Datenbank testPersonenDB = new Datenbank("jdbc:postgresql://localhost:5432/testpersonen_DB", "postgres", "passwort");
 		// Lösche alle Daten aus der Tabelle 'personen'
-		PostgreJavaConn.fuehre1StatementAus("DELETE FROM personen");
+		testPersonenDB.fuehre1StatementAus("DELETE FROM testpersonen");
+		// Schreibe Test-Personen in Datenbank
+		testPersonenDB.schreibeTestPersonenInDatenbank(listeTestpersonen);
 		
-		// Alle Objekte aus 'listePersonen' in Datenbank einfügen
-		PostgreJavaConn.schreibeObjekteInDatenbank(listePersonen);
 		
 		
 		
