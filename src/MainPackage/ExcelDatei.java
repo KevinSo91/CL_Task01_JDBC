@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelDatei {
 	
 	
-	public static void schreibePersonenInExcel (ArrayList<Person> inputListePersonen, String outputDatei, String tabelle) throws FileNotFoundException, IOException {
+	public static void schreibePersonenInExcel (ArrayList<Person> inputListePersonen, String outputExcelDateiPfad, String outputExcelDateiName, String tabelle) throws FileNotFoundException, IOException {
 		
 		System.out.println("Erstelle Excel-Datei...");
 		
@@ -45,7 +45,7 @@ public class ExcelDatei {
 		}
 		
 		// Erstelle Datei
-		mappe_Personen.write(new FileOutputStream(outputDatei));
+		mappe_Personen.write(new FileOutputStream(outputExcelDateiPfad + outputExcelDateiName));
 		
 		mappe_Personen.close();
 		
@@ -53,10 +53,10 @@ public class ExcelDatei {
 		
 	}// ENDE schreibePersonenInExcel()
 	
-	public static void lesePersonenAusExcel (String inputExcelDatei, String inputTabelle , ArrayList<Person> outputListePersonen) throws InvalidFormatException, IOException {
+	public static void lesePersonenAusExcel (String inputExcelDateiPfad, String inputExcelDateiName, String inputTabelle , ArrayList<Person> outputListePersonen) throws InvalidFormatException, IOException {
 		
 		// Erstelle Objekt für die Datei
-		File excelDatei = new File(inputExcelDatei);
+		File excelDatei = new File(inputExcelDateiPfad + inputExcelDateiName);
 		// Lese Datei ein
 		FileInputStream excelInput = new FileInputStream(excelDatei);
 		Workbook mappe = new XSSFWorkbook(excelInput);
@@ -104,7 +104,7 @@ public class ExcelDatei {
 		
 	}// ENDE lesePersonenAusExcel()
 	
-	public static void erzeugeTestdaten_xlsxDatei(String outputDatei, int anzahlZeilen) throws FileNotFoundException, IOException {
+	public static void erzeugeTestdaten_xlsxDatei(String outputDateiPfad, String outputDateiName, int anzahlZeilen) throws FileNotFoundException, IOException {
 		
 		System.out.println("Erstelle Excel-Testdatei...");
 		
@@ -120,7 +120,7 @@ public class ExcelDatei {
 		}
 		
 		// Erstelle Datei
-		mappe_Personen.write(new FileOutputStream(outputDatei));
+		mappe_Personen.write(new FileOutputStream(outputDateiPfad + outputDateiName));
 		
 		mappe_Personen.close();
 		

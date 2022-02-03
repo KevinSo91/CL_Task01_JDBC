@@ -87,7 +87,7 @@ public class Datenbank {
 			
 			verbindungHerstellen();
 			
-			System.out.println("\nSchreibe Personen in Datenbank...\n");
+			System.out.println("\nSchreibe TestPersonen in Datenbank...\n");
 			
 			String stmt = "INSERT INTO testpersonen(p_seq, p_first_name, p_last_name, p_age, p_street, p_city, p_state, p_zip, p_dollar, p_pick, p_date)"
 					+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
