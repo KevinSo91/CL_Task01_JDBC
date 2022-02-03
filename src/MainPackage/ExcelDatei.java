@@ -45,7 +45,7 @@ public class ExcelDatei {
 		}
 		
 		// Erstelle Datei
-		mappe_Personen.write(new FileOutputStream(outputExcelDateiPfad + outputExcelDateiName));
+		mappe_Personen.write(new FileOutputStream(outputExcelDateiPfad + "/" + outputExcelDateiName));
 		
 		mappe_Personen.close();
 		
@@ -120,7 +120,7 @@ public class ExcelDatei {
 		}
 		
 		// Erstelle Datei
-		mappe_Personen.write(new FileOutputStream(outputDateiPfad + outputDateiName));
+		mappe_Personen.write(new FileOutputStream(outputDateiPfad + "/" + outputDateiName));
 		
 		mappe_Personen.close();
 		
