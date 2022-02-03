@@ -54,7 +54,7 @@ public class JsonDatei {
 			JSONObject jsonObjectPerson = jsonArrayPersonen.getJSONObject(i);
 			int seq = jsonObjectPerson.getInt("seq");
 			
-			JSONObject jsonObjectName = jsonObjectPerson.getJSONObject("name");			// Ohne Array lösen!!!
+			JSONObject jsonObjectName = jsonObjectPerson.getJSONObject("name");
 			String firstName = jsonObjectName.getString("first");
 			String lastName = jsonObjectName.getString("last");
 			

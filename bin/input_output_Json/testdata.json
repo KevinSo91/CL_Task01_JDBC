@@ -1,4 +1,4 @@
-[
+{"testpersonen":[
  {"seq":1,"name":{"first":"Katharine","last":"Marsh"},"age":31,"street":"Tuhan Glen","city":"Gudiwfa","state":"AK","zip":39645,"dollar":"$9698.54","pick":"GREEN","date":"02/05/1955"},
  {"seq":2,"name":{"first":"Glenn","last":"Kelley"},"age":54,"street":"Jovu Avenue","city":"Rerpetjev","state":"NH","zip":42408,"dollar":"$2371.64","pick":"GREEN","date":"04/08/2038"},
  {"seq":3,"name":{"first":"Nelle","last":"Briggs"},"age":40,"street":"Iwoke View","city":"Dardocret","state":"RI","zip":9789,"dollar":"$3092.06","pick":"WHITE","date":"06/10/2036"},
@@ -9999,4 +9999,4 @@
  {"seq":9998,"name":{"first":"Isabelle","last":"Hale"},"age":44,"street":"Natvis View","city":"Lagdelik","state":"AZ","zip":29542,"dollar":"$1020.09","pick":"YELLOW","date":"09/26/2027"},
  {"seq":9999,"name":{"first":"Randy","last":"Barnett"},"age":54,"street":"Oleva Ridge","city":"Siwsegnu","state":"MS","zip":5548,"dollar":"$6836.32","pick":"WHITE","date":"10/25/1905"},
  {"seq":10000,"name":{"first":"Oscar","last":"Barker"},"age":31,"street":"Hedcub View","city":"Vunudha","state":"WA","zip":63855,"dollar":"$3985.27","pick":"BLUE","date":"12/15/1947"}
-]
+]}
