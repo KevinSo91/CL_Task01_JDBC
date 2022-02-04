@@ -22,70 +22,119 @@ public class Main {
 		PropertyReader properties = new PropertyReader();
 		
 		
-		ArrayList<TestPerson> listeTestpersonen = new ArrayList<TestPerson>();
+		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();
 		
 		// Erstelle ein JSON-Objekt
 		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "testdata");
 		// Schreibe Test-Personen in Liste 'listeTestpersonen'
-		testPersonen.schreibeTestPersonenInObjekte(listeTestpersonen);
+		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
 		
-		Datenbank testPersonenDB = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
-		// Lösche alle Daten aus der Tabelle 'testpersonen'
-		testPersonenDB.fuehre1StatementAus("DELETE FROM testpersonen");
-		// Schreibe Test-Personen in Datenbank
-		try{
-			testPersonenDB.schreibeTestPersonenInDatenbank(listeTestpersonen);
-		}catch(PSQLException e) {
-			e.printStackTrace();
-		}
+		// Übertragung in DB in 3. Normalform
+		Datenbank testpersonenDB = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
+		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_seq");
+		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_persons");
+		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_zip");
 		
+		testpersonenDB.schreibeTestPersonenInDatenbankNormalform3(listeTestPersonen);
 		
-		
-		// Erzeuge Datei mit Testdaten
-		TextDatei testdatei = new TextDatei(properties.getDefaultIO_txt(), "testdatei");
-		testdatei.schreibeTestdaten(300);
-		
-		// ArrayList für die Objekten deklarieren		
-		ArrayList<Person> listePersonen = new ArrayList<Person>();
-		
-		// Daten aus Testdatei als Objekte in 'listePersonen' instanziieren
-		testdatei.schreibePersonenInObjekte(listePersonen);		
 				
-		// Erstelle ein Objekt für eine Verbindung zu einer Datenbank
-		Datenbank PostgreJavaConn = new Datenbank(); // Leerer Konstruktor -> default Datenbank (Siehe Klasse 'Datenbank')
-		
-		// Lösche alle Daten aus der Tabelle 'personen'
-		PostgreJavaConn.fuehre1StatementAus("DELETE FROM personen");
-		
-		// Alle Objekte aus 'listePersonen' in Datenbank einfügen
-		try{
-			PostgreJavaConn.schreibePersonenInDatenbank(listePersonen);
-		}catch(PSQLException p) {
-			p.printStackTrace();
-		}
 		
 		
+		//*********************************************** ANFANG TEST ************************************************************
+		
+//		// Überprüfe ob zip doppelt vorkommen (Redundanzen/Anomalien vermeiden)
+//		ArrayList<Integer> listeZip = new ArrayList<Integer>();
+//		boolean doppelt = false;
+//		for(TestPerson person: listeTestPersonen) {		
+//			int zip = person.getZip();
+//			
+//			if (listeZip.contains(zip)) {
+//				System.out.println("Die zip " + zip + " kommt mehrfach vor");
+//				doppelt = true;
+//			}
+//			else{
+//				listeZip.add(zip);
+//			}		
+//		}		
+//		if (!doppelt){
+//			System.out.println("Es kommt kein zip doppelt vor");
+//		}
+//		else {
+//			System.out.println("Es kommen " + listeZip.size() + " zips mehrfach vor");
+//		}
 		
 		
-		listePersonen.forEach((person) -> person.infoAusgeben());
 		
-		//		
-		// Konsolenausgabe aller Daten in der Tabelle 'personen'
-		System.out.println("Ausgabe aller Daten in der Tabelle 'personen':\n");
-		PostgreJavaConn.ausgabeTabelle("personen");
 		
-		// 
-		ExcelDatei.schreibePersonenInExcel(listePersonen, 
-				properties.getDefaultIO_xlsx(), "OUTPUT_Mappe_Personen.xlsx", "Tabelle1");
 		
-		ExcelDatei.erzeugeTestdaten_xlsxDatei(properties.getDefaultIO_xlsx(),"INPUT_Testdaten_Personen.xlsx", 200);		
 		
-		ExcelDatei.lesePersonenAusExcel(properties.getDefaultIO_xlsx(),"INPUT_Testdaten_Personen.xlsx", "Tabelle1", listePersonen);
 		
-		listePersonen.forEach((person) -> person.infoAusgeben());
 		
-		PostgreJavaConn.ausgabePersonenMitAlterX(20);
-	
+		
+		//************************************************* ENDE TEST *************************************************************
+
+		
+		
+//		Datenbank testPersonenDB = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
+//		// Lösche alle Daten aus der Tabelle 'testpersonen'
+//		testPersonenDB.fuehre1StatementAus("DELETE FROM testpersonen");
+//		// Schreibe Test-Personen in Datenbank
+//		try{
+//			testPersonenDB.schreibeTestPersonenInDatenbankNormalform1(listeTestPersonen);
+//		}catch(PSQLException e) {
+//			e.printStackTrace();
+//		}
+
+
+		
+				
+//		// Erzeuge Datei mit Testdaten
+//		TextDatei testdatei = new TextDatei(properties.getDefaultIO_txt(), "testdatei");
+//		testdatei.schreibeTestdaten(300);
+//		
+//		// ArrayList für die Objekten deklarieren		
+//		ArrayList<Person> listePersonen = new ArrayList<Person>();
+//		
+//		// Daten aus Testdatei als Objekte in 'listePersonen' instanziieren
+//		testdatei.schreibePersonenInObjekte(listePersonen);		
+//				
+//		// Erstelle ein Objekt für eine Verbindung zu einer Datenbank
+//		Datenbank PostgreJavaConn = new Datenbank(); // Leerer Konstruktor -> default Datenbank (Siehe Klasse 'Datenbank')
+//		
+//		// Lösche alle Daten aus der Tabelle 'personen'
+//		PostgreJavaConn.fuehre1StatementAus("DELETE FROM personen");
+//		
+//		// Alle Objekte aus 'listePersonen' in Datenbank einfügen
+//		try{
+//			PostgreJavaConn.schreibePersonenInDatenbank(listePersonen);
+//		}catch(PSQLException p) {
+//			p.printStackTrace();
+//		}
+//		
+//		
+//		
+//		
+//		listePersonen.forEach((person) -> person.infoAusgeben());
+//		
+//		//		
+//		// Konsolenausgabe aller Daten in der Tabelle 'personen'
+//		System.out.println("Ausgabe aller Daten in der Tabelle 'personen':\n");
+//		PostgreJavaConn.ausgabeTabelle("personen");
+//		
+//		// 
+//		ExcelDatei.schreibePersonenInExcel(listePersonen, 
+//				properties.getDefaultIO_xlsx(), "OUTPUT_Mappe_Personen.xlsx", "Tabelle1");
+//		
+//		ExcelDatei.erzeugeTestdaten_xlsxDatei(properties.getDefaultIO_xlsx(),"INPUT_Testdaten_Personen.xlsx", 200);		
+//		
+//		ExcelDatei.lesePersonenAusExcel(properties.getDefaultIO_xlsx(),"INPUT_Testdaten_Personen.xlsx", "Tabelle1", listePersonen);
+//		
+//		listePersonen.forEach((person) -> person.infoAusgeben());
+//		
+//		PostgreJavaConn.ausgabePersonenMitAlterX(20);
+//	
+		
+		
 		System.out.println("\nDas Programm wird beendet...");
 		
 	}// ENDE Methode main()

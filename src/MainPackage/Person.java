@@ -3,6 +3,7 @@ package mainPackage;
 public class Person {
 	
 	// Attribute
+	
 	private String vorname;
 	private String nachname;
 	private int alter;
