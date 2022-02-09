@@ -1,4 +1,4 @@
-{"TestPersonen":[
+{"testpersonen":[
 {"seq":1,"name":{"first":"Katharine","last":"Marsh"},"age":31,"street":"Tuhan Glen","city":"Gudiwfa","state":"AK","zip":39645,"dollar":"$9698.54","pick":"GREEN","date":"02/05/1955"},
 {"seq":2,"name":{"first":"Glenn","last":"Kelley"},"age":54,"street":"Jovu Avenue","city":"Rerpetjev","state":"NH","zip":42408,"dollar":"$2371.64","pick":"GREEN","date":"04/08/2038"},
 {"seq":3,"name":{"first":"Nelle","last":"Briggs"},"age":40,"street":"Iwoke View","city":"Dardocret","state":"RI","zip":9789,"dollar":"$3092.06","pick":"WHITE","date":"06/10/2036"}]}

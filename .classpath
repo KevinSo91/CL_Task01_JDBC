@@ -58,5 +58,7 @@
 	<classpathentry kind="lib" path="C:/Users/user1/Downloads/Apache POI (EJava - Officel)/poi-bin-5.2.0-20220106/poi-bin-5.2.0/lib/log4j-api-2.17.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user1/Downloads/apache-log4j-2.17.0-bin/apache-log4j-2.17.0-bin/log4j-core-2.17.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user1/Downloads/org.json JAR/json-20211205.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user1/Downloads/javax.jason JAR/javax.json-1.1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user1/Downloads/gson JAR/gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

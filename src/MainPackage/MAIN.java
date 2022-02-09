@@ -25,42 +25,46 @@ public class Main {
 		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();
 		
 		// Erstelle ein JSON-Objekt
-		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "testdata");
+		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
 		// Schreibe Test-Personen in Liste 'listeTestpersonen'
 		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
 		
-		// Übertragung in DB in 3. Normalform
-		Datenbank testpersonenDB = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
-		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_seq");
-		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_persons");
-		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_zip");
+//		// Übertragung in DB in 3. Normalform
+//		Datenbank testpersonenDB = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
+//		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_seq");
+//		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_persons");
+//		testpersonenDB.fuehre1StatementAus("DELETE FROM testpersonen_normalform3.table_zip");
+//		
+//		testpersonenDB.schreibeTestPersonenInDatenbankNormalform3(listeTestPersonen);
 		
-		testpersonenDB.schreibeTestPersonenInDatenbankNormalform3(listeTestPersonen);
+		JsonDatei.schreibeTestPersonenInJsonDateiGsonGeordnet(listeTestPersonen, properties.getDefaultIO_json(), "OUTPUT_testdataSorted");
+		JsonDatei.schreibeTestPersonenInJsonDatei(listeTestPersonen, properties.getDefaultIO_json(), "OUTPUT_testdata");
 		
-				
+		
 		
 		
 		//*********************************************** ANFANG TEST ************************************************************
 		
 //		// Überprüfe ob zip doppelt vorkommen (Redundanzen/Anomalien vermeiden)
 //		ArrayList<Integer> listeZip = new ArrayList<Integer>();
-//		boolean doppelt = false;
+//		ArrayList<Integer> listeZipMehrfach = new ArrayList<Integer>();
+//		
 //		for(TestPerson person: listeTestPersonen) {		
 //			int zip = person.getZip();
 //			
 //			if (listeZip.contains(zip)) {
 //				System.out.println("Die zip " + zip + " kommt mehrfach vor");
-//				doppelt = true;
+//				listeZipMehrfach.add(zip);
 //			}
 //			else{
 //				listeZip.add(zip);
 //			}		
 //		}		
-//		if (!doppelt){
+//		if (listeZipMehrfach.size() == 0){
 //			System.out.println("Es kommt kein zip doppelt vor");
 //		}
 //		else {
-//			System.out.println("Es kommen " + listeZip.size() + " zips mehrfach vor");
+//			System.out.println("Es kommen " + listeZipMehrfach.size() + " zips mehrfach vor");
 //		}
 		
 		
