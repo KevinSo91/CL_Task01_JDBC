@@ -18,6 +18,7 @@ public class PropertyReader {
 	private String defaultIO_txt;
 	private String defaultIO_json;
 	private String defaultIO_xlsx;
+	private String defaultIO_csv;
 	
 	
 	public PropertyReader() {
@@ -39,6 +40,7 @@ public class PropertyReader {
 			this.defaultIO_txt = prop.getProperty("DefaultIOPath.txt");
 			this.defaultIO_json = prop.getProperty("DefaultIOPath.json");
 			this.defaultIO_xlsx = prop.getProperty("DefaultIOPath.xlsx");
+			this.defaultIO_csv = prop.getProperty("DefaultIOPath.csv");
 			
 		}catch (IOException ex) {
 			ex.printStackTrace();
@@ -75,6 +77,9 @@ public class PropertyReader {
 	}
 	public String getDefaultIO_xlsx() {
 		return this.defaultIO_xlsx;
+	}
+	public String getDefaultIO_csv() {
+		return this.defaultIO_csv;
 	}
 
 }

@@ -1,8 +1,12 @@
 package mainPackage;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -21,13 +25,29 @@ public class Main {
 		// Erstelle Objekt für die Properties
 		PropertyReader properties = new PropertyReader();
 		
-		
+		// Erstelle ArrayList für die Testpersonen
 		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();
 		
-		// Erstelle ein JSON-Objekt
-		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
-		// Schreibe Test-Personen in Liste 'listeTestpersonen'
-		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
+		
+//		
+		
+		CsvDatei csvInput = new CsvDatei(properties.getDefaultIO_csv(), "INPUT_TestpersonenSimple");
+		
+		csvInput.leseTestPersonenAusCsv(listeTestPersonen);
+		
+		CsvDatei csvOutput = new CsvDatei(properties.getDefaultIO_csv(), "OUTPUT_TestpersonenSimple");
+		
+		csvOutput.schreibeTestPersonenInCsvDatei(listeTestPersonen);
+		
+		//listeTestPersonen.forEach((person) -> System.out.println(person.infoAusgebenString()));
+		
+		
+//		// Erstelle ein JSON-Objekt
+//		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
+//		// Schreibe Test-Personen in Liste 'listeTestpersonen'
+//		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
+				
+		
 		
 //		// Übertragung in DB in 3. Normalform
 //		Datenbank testpersonenDB = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
@@ -37,13 +57,18 @@ public class Main {
 //		
 //		testpersonenDB.schreibeTestPersonenInDatenbankNormalform3(listeTestPersonen);
 		
-		JsonDatei.schreibeTestPersonenInJsonDateiGsonGeordnet(listeTestPersonen, properties.getDefaultIO_json(), "OUTPUT_testdataSorted");
-		JsonDatei.schreibeTestPersonenInJsonDatei(listeTestPersonen, properties.getDefaultIO_json(), "OUTPUT_testdata");
+//		JsonDatei.schreibeTestPersonenInJsonDateiGsonGeordnet(listeTestPersonen, properties.getDefaultIO_json(), "OUTPUT_testdataSorted");
+//		JsonDatei.schreibeTestPersonenInJsonDatei(listeTestPersonen, properties.getDefaultIO_json(), "OUTPUT_testdata");
+		
+			
+		
 		
 		
 		
 		
 		//*********************************************** ANFANG TEST ************************************************************
+		
+		
 		
 //		// Überprüfe ob zip doppelt vorkommen (Redundanzen/Anomalien vermeiden)
 //		ArrayList<Integer> listeZip = new ArrayList<Integer>();
@@ -70,11 +95,6 @@ public class Main {
 		
 		
 		
-		
-		
-		
-		
-		
 		//************************************************* ENDE TEST *************************************************************
 
 		
@@ -92,9 +112,9 @@ public class Main {
 
 		
 				
-//		// Erzeuge Datei mit Testdaten
-//		TextDatei testdatei = new TextDatei(properties.getDefaultIO_txt(), "testdatei");
-//		testdatei.schreibeTestdaten(300);
+		// Erzeuge Datei mit Testdaten
+		TextDatei testdatei = new TextDatei(properties.getDefaultIO_txt(), "OUTPUT_Personen");
+		testdatei.schreibeTestdaten(300);
 //		
 //		// ArrayList für die Objekten deklarieren		
 //		ArrayList<Person> listePersonen = new ArrayList<Person>();
