@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.message.Message;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.postgresql.util.PSQLException;
 
@@ -20,7 +21,8 @@ public class Main {
 	// main Methode
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidFormatException, SQLException {
 		
-		System.out.println("\nDas Programm startet...\n");
+		System.out.println("\nDas Programm startet...\n");	
+		
 		
 		// Erstelle Objekt für die Properties
 		PropertyReader properties = new PropertyReader();
@@ -29,19 +31,24 @@ public class Main {
 		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();
 		
 		
-//		
+//		//Erstelle ein JSON-Objekt
+//		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
+//		// Schreibe Test-Personen in Liste 'listeTestpersonen'
+//		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
 		
-		CsvDatei csvInput = new CsvDatei(properties.getDefaultIO_csv(), "INPUT_TestpersonenSimple");
 		
-		csvInput.leseTestPersonenAusCsv(listeTestPersonen);
 		
-		CsvDatei csvOutput = new CsvDatei(properties.getDefaultIO_csv(), "OUTPUT_TestpersonenSimple");
+		CsvDatei csvInput = new CsvDatei(properties.getDefaultIO_csv(), "INPUT_Testpersonen");
+		
+		csvInput.schreibeTestPersonenInObjekte(listeTestPersonen);
+		
+		CsvDatei csvOutput = new CsvDatei(properties.getDefaultIO_csv(), "OUTPUT_Testpersonen");
 		
 		csvOutput.schreibeTestPersonenInCsvDatei(listeTestPersonen);
 		
-		//listeTestPersonen.forEach((person) -> System.out.println(person.infoAusgebenString()));
+		listeTestPersonen.forEach((person) -> System.out.println(person.infoAusgebenString()));
 		
-		
+				
 //		// Erstelle ein JSON-Objekt
 //		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
 //		// Schreibe Test-Personen in Liste 'listeTestpersonen'

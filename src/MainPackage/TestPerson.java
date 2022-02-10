@@ -80,7 +80,7 @@ public class TestPerson {
 	public String infoAusgebenString() {
 		String ausgabe = MessageFormat.format("SEQ: {0} - FIRSTNAME: {1} - LASTNAME: {2} - AGE: {3} - STREET: {4} - CITY: {5} - STATE: {6}"
 										+ " - ZIP: {7} - DOLLAR: {8} - PICK {9} - DATE {10}",
-										seq, firstName, lastName, age, street, city, state, zip, dollar, pick, date );
+										Integer.toString(seq), firstName, lastName, age, street, city, state, Integer.toString(zip), dollar, pick, date );
 		return ausgabe;
 	}
 	

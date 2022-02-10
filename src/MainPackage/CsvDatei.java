@@ -43,8 +43,8 @@ public class CsvDatei {
 			
 			for(TestPerson testperson: inputArrayList) {
 				buffWriter.write(MessageFormat.format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}\n",
-						testperson.getSeq(), testperson.getFirstName(), testperson.getLastName(), testperson.getAge(), testperson.getStreet(), testperson.getCity(),
-						testperson.getState(), testperson.getZip(), testperson.getDollar(), testperson.getPick(), testperson.getDate()));
+						Integer.toString(testperson.getSeq()), testperson.getFirstName(), testperson.getLastName(), testperson.getAge(), testperson.getStreet(), testperson.getCity(),
+						testperson.getState(), Integer.toString(testperson.getZip()), testperson.getDollar(), testperson.getPick(), testperson.getDate()));
 								
 			}
 			buffWriter.close();
@@ -54,20 +54,19 @@ public class CsvDatei {
 			System.out.println("\nDaten wurden erfolgreich in CSV-Datei geschrieben!\n");
 		}
 		
-		public void leseTestPersonenAusCsv(ArrayList<TestPerson> outputArrayList) throws IOException {
+		public void schreibeTestPersonenInObjekte(ArrayList<TestPerson> outputArrayList) throws IOException, NumberFormatException {
 			
 			FileReader reader = new FileReader(this.csvFile);
 			BufferedReader buffReader = new BufferedReader(reader);
 			
-//			buffReader.readLine();
-//			buffReader.readLine();
-//			buffReader.readLine();
+			ignoriereZeilen(buffReader, 2);
+			
 			String[] testPerson;
+			String zeile;
 			
-			
-			while(buffReader.readLine() != null) {
+			for(zeile = buffReader.readLine(); zeile != null; zeile = buffReader.readLine()) {
 				try {
-					testPerson = buffReader.readLine().split(",");
+					testPerson = zeile.split(",");					
 					
 					outputArrayList.add(new TestPerson(Integer.parseInt(testPerson[0]),testPerson[1],testPerson[2],Integer.parseInt(testPerson[3]),testPerson[4],
 														testPerson[5],testPerson[6],Integer.parseInt(testPerson[7]),testPerson[8],testPerson[9],testPerson[10]));
@@ -81,6 +80,14 @@ public class CsvDatei {
 			
 			
 			
+		}
+		
+		// Methode um X um Zeilen am Anfang der Datei beim Lesen zu überspringen
+		private static void ignoriereZeilen(BufferedReader buffReader, int anzahlZeilen) throws IOException {
+			
+			for(int i = 0 ; i < anzahlZeilen ; i++) {
+				buffReader.readLine();
+			}			
 		}
 
 }
