@@ -28,25 +28,31 @@ public class Main {
 		PropertyReader properties = new PropertyReader();
 		
 		// Erstelle ArrayList für die Testpersonen
-		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();
+		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();		
+		
+		//Erstelle ein JSON-Objekt
+		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
+		// Schreibe Test-Personen in Liste 'listeTestpersonen'
+		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
+		
+		//************************************** Liste mit Testpersonen erstellt **********************************************************
 		
 		
-//		//Erstelle ein JSON-Objekt
-//		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
-//		// Schreibe Test-Personen in Liste 'listeTestpersonen'
-//		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
+		
+		ExcelDatei.schreibeTestPersonenInExcel(listeTestPersonen, properties.getDefaultIO_xlsx(), "OUTPUT_Testpersonen", "Testpersonen");
 		
 		
 		
-		CsvDatei csvInput = new CsvDatei(properties.getDefaultIO_csv(), "INPUT_Testpersonen");
 		
-		csvInput.schreibeTestPersonenInObjekte(listeTestPersonen);
-		
-		CsvDatei csvOutput = new CsvDatei(properties.getDefaultIO_csv(), "OUTPUT_Testpersonen");
-		
-		csvOutput.schreibeTestPersonenInCsvDatei(listeTestPersonen);
-		
-		listeTestPersonen.forEach((person) -> System.out.println(person.infoAusgebenString()));
+//		CsvDatei csvInput = new CsvDatei(properties.getDefaultIO_csv(), "INPUT_Testpersonen");
+//		
+//		csvInput.schreibeTestPersonenInObjekte(listeTestPersonen);
+//		
+//		CsvDatei csvOutput = new CsvDatei(properties.getDefaultIO_csv(), "OUTPUT_Testpersonen");
+//		
+//		csvOutput.schreibeTestPersonenInCsvDatei(listeTestPersonen);
+//		
+//		listeTestPersonen.forEach((person) -> System.out.println(person.infoAusgebenString()));
 		
 				
 //		// Erstelle ein JSON-Objekt
