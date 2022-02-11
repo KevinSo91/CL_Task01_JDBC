@@ -31,10 +31,11 @@ public class Main {
 		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();	
 		
 		
-		Datenbank datenbank = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
-		datenbank.schreibeTestPersonenNormalform3InObjekte(listeTestPersonen);
+		Datenbank inputDatenbank = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
+		inputDatenbank.schreibeTestPersonenNormalform3InObjekte(listeTestPersonen);
 		
-		
+		ExcelDatei outputExcel = new ExcelDatei(properties.getDefaultIO_xlsx(), "OUTPUT_testpersonen_norm3", "test_mappe" );
+		outputExcel.schreibeTestPersonenInExcelNormalform3(listeTestPersonen);
 		
 		
 		

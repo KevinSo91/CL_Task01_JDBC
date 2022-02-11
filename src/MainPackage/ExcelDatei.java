@@ -123,47 +123,87 @@ public class ExcelDatei {
 	}// ENDE schreibeTestPersonenInExcel()
 	
 	
-//	public static void schreibeTestPersonenInExcelNormalform3 (Datenbank datenbank, String outputExcelDateiPfad, String outputExcelDateiName) throws FileNotFoundException, IOException {
-//		
-//		System.out.println("Erstelle Excel-Datei...");
-//		
-//		Workbook mappe_Sequenzen = new XSSFWorkbook(); // xlsx-Format (ab 2003)
-//		Sheet Sequenzen = mappe_Sequenzen.createSheet("seq");
-//		// Erstelle Kopfzeile
-//		Row kopfZeile = Sequenzen.createRow(0);
-//		kopfZeile.createCell(0).setCellValue("seq_id");
-//		kopfZeile.createCell(1).setCellValue("person_id");		
-//		kopfZeile.createCell(2).setCellValue("seq_dollar");
-//		kopfZeile.createCell(3).setCellValue("seq_pick");
-//		kopfZeile.createCell(4).setCellValue("seq_date");
-//		
-//		// Fuege Datensaetze in Tabelle ein
-//		int zeile = 1;
-//		for (TestPerson person : inputListeTestPersonen) {
-//			Row datensatz = tabelle_Personen.createRow(zeile);
-//			datensatz.createCell(0).setCellValue(person.getSeq());
-//			datensatz.createCell(1).setCellValue(person.getFirstName());
-//			datensatz.createCell(2).setCellValue(person.getLastName());
-//			datensatz.createCell(3).setCellValue(person.getAge());
-//			datensatz.createCell(4).setCellValue(person.getStreet());
-//			datensatz.createCell(5).setCellValue(person.getCity());
-//			datensatz.createCell(6).setCellValue(person.getState());
-//			datensatz.createCell(7).setCellValue(person.getZip());
-//			datensatz.createCell(8).setCellValue(person.getDollar());
-//			datensatz.createCell(9).setCellValue(person.getPick());
-//			datensatz.createCell(10).setCellValue(person.getDate());
-//			
-//			zeile++;
-//		}
-//		
-//		// Erstelle Datei
-//		mappe_Personen.write(new FileOutputStream(outputExcelDateiPfad + "/" + outputExcelDateiName + ".xlsx"));
-//		
-//		mappe_Personen.close();
-//		
-//		System.out.println("Excel-Datei wurde erstellt!");
-//		
-//	}// ENDE schreibeTestPersonenInExcel()
+	public void schreibeTestPersonenInExcelNormalform3 (ArrayList<TestPerson> inputListeTestPersonen) throws FileNotFoundException, IOException {
+		
+		System.out.println("Erstelle Excel-Datei...");
+		
+		Workbook mappe_Sequenzen = new XSSFWorkbook(); // xlsx-Format (ab 2003)
+		
+		// Erstelle Tabelle 'Sequenzen'
+		Sheet Sequenzen = mappe_Sequenzen.createSheet("sequenzen");
+		// Erstelle Kopfzeile
+		Row kopfZeile = Sequenzen.createRow(0);
+		kopfZeile.createCell(0).setCellValue("seq id");
+		kopfZeile.createCell(1).setCellValue("person id");		
+		kopfZeile.createCell(2).setCellValue("seq dollar");
+		kopfZeile.createCell(3).setCellValue("seq pick");
+		kopfZeile.createCell(4).setCellValue("seq date");		
+		// Fuege Sequenzen in Tabelle 'Sequenzen' ein
+		int zeile = 1;
+		for (TestPerson person : inputListeTestPersonen) {
+			Row datensatz = Sequenzen.createRow(zeile);
+			datensatz.createCell(0).setCellValue(person.getSeq());
+			datensatz.createCell(1).setCellValue(person.getSeq());      // Nur in DIESEM FALL, da keine Personen doppelt: seq_id -> person_id	
+			
+			float dollarFloat = Float.parseFloat(person.getDollar().substring(1));  // Entfert das erste Zeichen des Strings und speichert den Wert als Float
+			datensatz.createCell(2).setCellValue(dollarFloat);
+			
+			datensatz.createCell(3).setCellValue(person.getPick());
+			datensatz.createCell(4).setCellValue(person.getDate());
+			
+			zeile++;
+		}
+		
+		//Erstelle Tabelle 'personen'
+		Sheet Personen = mappe_Sequenzen.createSheet("personen");
+		// Erstelle Kopfzeile
+		kopfZeile = Personen.createRow(0);
+		kopfZeile.createCell(0).setCellValue("person id");
+		kopfZeile.createCell(1).setCellValue("person fist name");		
+		kopfZeile.createCell(2).setCellValue("person last name");
+		kopfZeile.createCell(3).setCellValue("person age");
+		kopfZeile.createCell(4).setCellValue("person street");
+		kopfZeile.createCell(5).setCellValue("person zip");
+		// Füge Personen in Tabelle 'personen'ein
+		zeile = 1;
+		for (TestPerson person : inputListeTestPersonen) {
+			Row datensatz = Personen.createRow(zeile);
+			datensatz.createCell(0).setCellValue(person.getSeq());
+			datensatz.createCell(1).setCellValue(person.getFirstName());	
+			datensatz.createCell(2).setCellValue(person.getLastName());
+			datensatz.createCell(3).setCellValue(person.getAge());
+			datensatz.createCell(4).setCellValue(person.getStreet());
+			datensatz.createCell(5).setCellValue(person.getZip());
+			
+			zeile++;			
+		}
+		
+		// Erstelle Tabelle 'zips'
+		Sheet zip = mappe_Sequenzen.createSheet("zips");
+		// Erstelle Kopfzeile
+		kopfZeile = zip.createRow(0);
+		kopfZeile.createCell(0).setCellValue("zip");
+		kopfZeile.createCell(1).setCellValue("zip city");		
+		kopfZeile.createCell(2).setCellValue("zip state");				
+		// Fuege ZIPs in Tabelle 'zips' ein
+		zeile = 1;
+		for (TestPerson person : inputListeTestPersonen) {
+			Row datensatz = zip.createRow(zeile);
+			datensatz.createCell(0).setCellValue(person.getZip());
+			datensatz.createCell(1).setCellValue(person.getCity());
+			datensatz.createCell(2).setCellValue(person.getState());			
+			
+			zeile++;
+		}
+						
+		// Erstelle Datei
+		mappe_Sequenzen.write(new FileOutputStream(this.fileLocation + "/" + this.fileName ));
+		
+		mappe_Sequenzen.close();
+		
+		System.out.println("Excel-Datei wurde erstellt!");
+		
+	}// ENDE schreibeTestPersonenInExcel()
 	
 	
 	public static void lesePersonenAusExcel (String inputExcelDateiPfad, String inputExcelDateiName, String inputTabelle , ArrayList<Person> outputListePersonen) throws InvalidFormatException, IOException {
