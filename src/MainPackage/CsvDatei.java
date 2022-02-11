@@ -70,7 +70,7 @@ public class CsvDatei {
 					
 					outputArrayList.add(new TestPerson(Integer.parseInt(testPerson[0]),testPerson[1],testPerson[2],Integer.parseInt(testPerson[3]),testPerson[4],
 														testPerson[5],testPerson[6],Integer.parseInt(testPerson[7]),testPerson[8],testPerson[9],testPerson[10]));
-				}catch(NumberFormatException e) {
+				}catch(Exception e) {
 					e.printStackTrace();
 				}
 				

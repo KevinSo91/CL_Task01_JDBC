@@ -78,8 +78,8 @@ public class ExcelDatei {
 		
 		System.out.println("Erstelle Excel-Datei...");
 		
-		Workbook mappe_Personen = new XSSFWorkbook(); // xlsx-Format (ab 2003)
-		Sheet tabelle_Personen = mappe_Personen.createSheet(tabelleName);
+		Workbook mappe_TestPersonen = new XSSFWorkbook(); // xlsx-Format (ab 2003)
+		Sheet tabelle_Personen = mappe_TestPersonen.createSheet(tabelleName);
 		// Erstelle Kopfzeile
 		Row kopfZeile = tabelle_Personen.createRow(0);
 		kopfZeile.createCell(0).setCellValue("seq");
@@ -96,31 +96,74 @@ public class ExcelDatei {
 		
 		// Fuege Datensaetze in Tabelle ein
 		int zeile = 1;
-		for (TestPerson person : inputListeTestPersonen) {
+		for (TestPerson testPerson : inputListeTestPersonen) {
 			Row datensatz = tabelle_Personen.createRow(zeile);
-			datensatz.createCell(0).setCellValue(person.getSeq());
-			datensatz.createCell(1).setCellValue(person.getFirstName());
-			datensatz.createCell(2).setCellValue(person.getLastName());
-			datensatz.createCell(3).setCellValue(person.getAge());
-			datensatz.createCell(4).setCellValue(person.getStreet());
-			datensatz.createCell(5).setCellValue(person.getCity());
-			datensatz.createCell(6).setCellValue(person.getState());
-			datensatz.createCell(7).setCellValue(person.getZip());
-			datensatz.createCell(8).setCellValue(person.getDollar());
-			datensatz.createCell(9).setCellValue(person.getPick());
-			datensatz.createCell(10).setCellValue(person.getDate());
+			datensatz.createCell(0).setCellValue(testPerson.getSeq());
+			datensatz.createCell(1).setCellValue(testPerson.getFirstName());
+			datensatz.createCell(2).setCellValue(testPerson.getLastName());
+			datensatz.createCell(3).setCellValue(testPerson.getAge());
+			datensatz.createCell(4).setCellValue(testPerson.getStreet());
+			datensatz.createCell(5).setCellValue(testPerson.getCity());
+			datensatz.createCell(6).setCellValue(testPerson.getState());
+			datensatz.createCell(7).setCellValue(testPerson.getZip());
+			datensatz.createCell(8).setCellValue(testPerson.getDollar());
+			datensatz.createCell(9).setCellValue(testPerson.getPick());
+			datensatz.createCell(10).setCellValue(testPerson.getDate());
 			
 			zeile++;
 		}
 		
 		// Erstelle Datei
-		mappe_Personen.write(new FileOutputStream(outputExcelDateiPfad + "/" + outputExcelDateiName + ".xlsx"));
+		mappe_TestPersonen.write(new FileOutputStream(outputExcelDateiPfad + "/" + outputExcelDateiName + ".xlsx"));
 		
-		mappe_Personen.close();
+		mappe_TestPersonen.close();
 		
 		System.out.println("Excel-Datei wurde erstellt!");
 		
 	}// ENDE schreibeTestPersonenInExcel()
+	
+	
+//	public static void schreibeTestPersonenInExcelNormalform3 (Datenbank datenbank, String outputExcelDateiPfad, String outputExcelDateiName) throws FileNotFoundException, IOException {
+//		
+//		System.out.println("Erstelle Excel-Datei...");
+//		
+//		Workbook mappe_Sequenzen = new XSSFWorkbook(); // xlsx-Format (ab 2003)
+//		Sheet Sequenzen = mappe_Sequenzen.createSheet("seq");
+//		// Erstelle Kopfzeile
+//		Row kopfZeile = Sequenzen.createRow(0);
+//		kopfZeile.createCell(0).setCellValue("seq_id");
+//		kopfZeile.createCell(1).setCellValue("person_id");		
+//		kopfZeile.createCell(2).setCellValue("seq_dollar");
+//		kopfZeile.createCell(3).setCellValue("seq_pick");
+//		kopfZeile.createCell(4).setCellValue("seq_date");
+//		
+//		// Fuege Datensaetze in Tabelle ein
+//		int zeile = 1;
+//		for (TestPerson person : inputListeTestPersonen) {
+//			Row datensatz = tabelle_Personen.createRow(zeile);
+//			datensatz.createCell(0).setCellValue(person.getSeq());
+//			datensatz.createCell(1).setCellValue(person.getFirstName());
+//			datensatz.createCell(2).setCellValue(person.getLastName());
+//			datensatz.createCell(3).setCellValue(person.getAge());
+//			datensatz.createCell(4).setCellValue(person.getStreet());
+//			datensatz.createCell(5).setCellValue(person.getCity());
+//			datensatz.createCell(6).setCellValue(person.getState());
+//			datensatz.createCell(7).setCellValue(person.getZip());
+//			datensatz.createCell(8).setCellValue(person.getDollar());
+//			datensatz.createCell(9).setCellValue(person.getPick());
+//			datensatz.createCell(10).setCellValue(person.getDate());
+//			
+//			zeile++;
+//		}
+//		
+//		// Erstelle Datei
+//		mappe_Personen.write(new FileOutputStream(outputExcelDateiPfad + "/" + outputExcelDateiName + ".xlsx"));
+//		
+//		mappe_Personen.close();
+//		
+//		System.out.println("Excel-Datei wurde erstellt!");
+//		
+//	}// ENDE schreibeTestPersonenInExcel()
 	
 	
 	public static void lesePersonenAusExcel (String inputExcelDateiPfad, String inputExcelDateiName, String inputTabelle , ArrayList<Person> outputListePersonen) throws InvalidFormatException, IOException {

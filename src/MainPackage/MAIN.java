@@ -28,18 +28,30 @@ public class Main {
 		PropertyReader properties = new PropertyReader();
 		
 		// Erstelle ArrayList für die Testpersonen
-		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();		
+		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();	
 		
-		//Erstelle ein JSON-Objekt
-		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
-		// Schreibe Test-Personen in Liste 'listeTestpersonen'
-		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
 		
-		//************************************** Liste mit Testpersonen erstellt **********************************************************
+		Datenbank datenbank = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
+		datenbank.schreibeTestPersonenNormalform3InObjekte(listeTestPersonen);
 		
 		
 		
-		ExcelDatei.schreibeTestPersonenInExcel(listeTestPersonen, properties.getDefaultIO_xlsx(), "OUTPUT_Testpersonen", "Testpersonen");
+		
+		
+		
+		
+		
+		
+//		//Erstelle ein JSON-Objekt
+//		JsonDatei testPersonen = new JsonDatei(properties.getDefaultIO_json(), "INPUT_testdata");
+//		// Schreibe Test-Personen in Liste 'listeTestpersonen'
+//		testPersonen.schreibeTestPersonenInObjekte(listeTestPersonen);
+//		
+//		//************************************** Liste mit Testpersonen erstellt **********************************************************
+//		
+//		
+//		
+//		ExcelDatei.schreibeTestPersonenInExcel(listeTestPersonen, properties.getDefaultIO_xlsx(), "OUTPUT_Testpersonen", "Testpersonen");
 		
 		
 		

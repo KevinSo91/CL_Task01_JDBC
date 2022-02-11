@@ -38,6 +38,10 @@ public class TestPerson {
 		this.date = date;
 	}
 	
+	public TestPerson() {
+		
+	}
+	
 	//******************************************* Methoden ***************************************************
 	
 	public int getSeq() {
@@ -72,6 +76,40 @@ public class TestPerson {
 	}
 	public String getDate() {
 		return this.date;
+	}
+	
+	public void setSeq(int seq) {
+		this.seq = seq ;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
+	public void setDollar(String dollar) {
+		this.dollar = dollar;
+	}
+	public void setPick(String pick) {
+		this.pick = pick;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 	

@@ -313,6 +313,43 @@ public class Datenbank {
 			verbindungTrennen();
 		}
 		
+		// Methode um TestPersonen aus Datenbank(Normalisiert) als Objekte in Liste zu schreiben
+		public void schreibeTestPersonenNormalform3InObjekte(ArrayList<TestPerson> outputListeTestPersonen) throws SQLException {
+			
+			verbindungHerstellen();
+			
+			String stmt = "SELECT * FROM (table_seq INNER JOIN table_persons ON table_seq.p_id = table_persons.p_id) "
+										+ "INNER JOIN table_zip ON table_persons.p_zip = table_zip.zip";
+			
+			PreparedStatement preparedStmt = conn.prepareStatement(stmt);
+			ResultSet rs = preparedStmt.executeQuery();			
+					
+			while(rs.next()) {
+				
+				int id = (rs.getInt("s_id"));
+				String firstName = (rs.getString("p_first_name"));
+				String lastName = (rs.getString("p_last_name"));
+				int age = (rs.getInt("p_age"));
+				String street = (rs.getString("p_street"));
+				String city = (rs.getString("z_city"));
+				String state = (rs.getString("z_state"));
+				int zip = (rs.getInt("zip"));
+				String dollar = (rs.getString("s_dollar"));
+				String pick = (rs.getString("s_pick"));
+				String date = (rs.getString("s_date"));
+				
+				outputListeTestPersonen.add(new TestPerson(id, firstName, lastName, age, street, city, state, zip, dollar, pick, date));
+				
+			}
+						
+			rs.close();
+			preparedStmt.close();
+			
+			verbindungTrennen();
+					
+		} // ENDE schreibeTestPersonenNormalform3InObjekte()
+		
+		
 		// Methode um einen String mit einfachen Anführungszeichen zu umgeben (benoetigt fuer SQL-Statements)
 		public static String sqlString(String eingabe)
 		{
