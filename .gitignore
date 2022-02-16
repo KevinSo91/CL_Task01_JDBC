@@ -2,3 +2,4 @@
 src/config/config.properties
 *.properties
 
+src/config/
