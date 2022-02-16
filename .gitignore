@@ -1,5 +1,5 @@
-/bin/config/config.properties
-/src/config/config.properties
+bin/config/
+src/config/
 NeuesTextdokument.txt
 *.properties
 *.txt
