@@ -2,7 +2,10 @@ package mainPackage;
 
 import java.sql.*;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+
+import org.bouncycastle.util.Properties;
 
 public class Datenbank {
 	
@@ -21,9 +24,9 @@ public class Datenbank {
 		
 		// default Datenbank
 		public Datenbank() {
-			this.DB_URL = "jdbc:postgresql://localhost:5432/java_connection_DB";
-			this.DB_USER = "postgres";
-			this.DB_PASS = "passwort";
+			this.DB_URL = Properties.getPropertyValue("dbDefault.url");
+			this.DB_USER = Properties.getPropertyValue("dbDefault.user");
+			this.DB_PASS = Properties.getPropertyValue("dbDefault.password");
 		}
 		
 		// explizite Datenbank
@@ -55,7 +58,7 @@ public class Datenbank {
 			}
 		}
 		
-		public void schreibePersonenInDatenbank(ArrayList<Person> listePersonen) throws SQLException {
+		public void schreibePersonenInDatenbank(ArrayList<Person> outputListePersonen) throws SQLException {
 			
 			verbindungHerstellen();
 			
@@ -65,7 +68,7 @@ public class Datenbank {
 			PreparedStatement preparedStatement = conn.prepareStatement(stmt);
 			int i_id = 1;
 			
-			for(Person person : listePersonen) {
+			for(Person person : outputListePersonen) {
 				preparedStatement.setInt(1, i_id);
 				preparedStatement.setString(2, person.getVorname());
 				preparedStatement.setString(3, person.getNachname());
@@ -83,17 +86,17 @@ public class Datenbank {
 		}
 		
 		// Methode zum Übertragen der Daten aus einer Liste von Objekten in eine Datenbank (1. Normalform)
-		public void schreibeTestPersonenInDatenbankNormalform1(ArrayList<TestPerson> listePersonen) throws SQLException {
+		public void schreibeTestPersonenInDatenbankNormalform1(ArrayList<TestPerson> inputListePersonen) throws SQLException, ParseException {
 			
 			verbindungHerstellen();
 			
 			System.out.println("\nSchreibe Personen in Datenbank...\n");
 			
-			String stmt = "INSERT INTO testpersonen(p_seq, p_first_name, p_last_name, p_age, p_street, p_city, p_state, p_zip, p_dollar, p_pick, p_date)"
+			String stmt = "INSERT INTO normalform1.table_seq(seq_id, p_first_name, p_last_name, p_age, p_street, p_city, p_state, p_zip, p_dollar, p_pick, p_date)"
 					+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = conn.prepareStatement(stmt);
-						
-			for(TestPerson person : listePersonen) {
+			
+			for(TestPerson person : inputListePersonen) {
 				preparedStatement.setInt(1, person.getSeq());
 				preparedStatement.setString(2, person.getFirstName());
 				preparedStatement.setString(3, person.getLastName());
@@ -102,9 +105,9 @@ public class Datenbank {
 				preparedStatement.setString(6, person.getCity());
 				preparedStatement.setString(7, person.getState());
 				preparedStatement.setInt(8, person.getZip());
-				preparedStatement.setString(9, person.getDollar());
+				preparedStatement.setFloat(9, person.getDollarFloat());
 				preparedStatement.setString(10, person.getPick());
-				preparedStatement.setString(11, person.getDate());
+				preparedStatement.setString(11, person.getDateUS());
 			
 				preparedStatement.executeUpdate();				
 			}
@@ -117,21 +120,21 @@ public class Datenbank {
 		}// ENDE schreibeTestPersonenInDatenbank()
 		
 		// Methode zum Übertragen der Daten aus einer Liste von Objekten in eine Datenbank (3. Normalform)
-		public void schreibeTestPersonenInDatenbankNormalform3(ArrayList<TestPerson> listePersonen) throws SQLException {
+		public void schreibeTestPersonenInDatenbankNormalform3(ArrayList<TestPerson> inputListePersonen) throws SQLException {
 			
 			verbindungHerstellen();
 			
-			//---------------------------------------------- Sequenzen -----------------------------------------------------
+			//---------------------------------------------- Tabelle: Sequenzen -----------------------------------------------------
 			
 				System.out.println("\nSchreibe Sequenzen (Vorgänge) in Datenbank...\n");				
 				
-				String stmt = "INSERT INTO testpersonen_normalform3.table_seq" + 		 // Schema voranstellen, Punktnotation für Tabelle
+				String stmt = "INSERT INTO normalform3.table_seq" + 		 // Schema voranstellen, Punktnotation für Tabelle
 							  "(s_id, p_id, s_dollar, s_pick, s_date) VALUES(?, ?, ?, ?, ?)";
 				
 				PreparedStatement preparedStatement = conn.prepareStatement(stmt);
 			
 			try{				
-				for(TestPerson person : listePersonen) {
+				for(TestPerson person : inputListePersonen) {
 					preparedStatement.setInt(1, person.getSeq());			// seq kann in DIESEM KONKRETEN FALL für p_id  übernommen werden,
 					preparedStatement.setInt(2, person.getSeq());    		// da keine Person doppelt vorkommmt -> sonst z.B. über Zählervariable	
 					preparedStatement.setString(3, person.getDollar());
@@ -149,17 +152,17 @@ public class Datenbank {
 				e.printStackTrace();
 			}
 			
-			//---------------------------------------------- Personen -----------------------------------------------------
+			//---------------------------------------------- Tabelle: Personen -----------------------------------------------------
 			
 			System.out.println("\nSchreibe Testpersonen in Datenbank...\n");
 			
-			stmt = "INSERT INTO testpersonen_normalform3.table_persons" + 		 // Schema voranstellen, Punktnotation für Tabelle
+			stmt = "INSERT INTO normalform3.table_persons" + 		 // Schema voranstellen, Punktnotation für Tabelle
 				   "(p_id, p_first_name, p_last_name, p_age, p_street, p_zip) VALUES(?, ?, ?, ?, ?, ?)";
 			
 			preparedStatement = conn.prepareStatement(stmt);
 			
 			try{
-				for(TestPerson person : listePersonen) {
+				for(TestPerson person : inputListePersonen) {
 					preparedStatement.setInt(1, person.getSeq());			// seq kann in DIESEM KONKRETEN FALL für p_id  übernommen werden,
 					preparedStatement.setString(2, person.getFirstName());    		// da keine Person doppelt vorkommmt -> sonst über Zählervariable			
 					preparedStatement.setString(3, person.getLastName());
@@ -178,17 +181,17 @@ public class Datenbank {
 				e.printStackTrace();
 			}
 			
-			//---------------------------------------------- zip -----------------------------------------------------
+			//---------------------------------------------- Tabelle: ZIP -----------------------------------------------------
 			
 			System.out.println("\nSchreibe zip in Datenbank...\n");
 			
-			stmt = "INSERT INTO testpersonen_normalform3.table_zip" + 		 // Schema voranstellen, Punktnotation für Tabelle
+			stmt = "INSERT INTO normalform3.table_zip" + 		 // Schema voranstellen, Punktnotation für Tabelle
 				   "(zip, z_city, z_state) VALUES(?, ?, ?)";
 			
 			preparedStatement = conn.prepareStatement(stmt);
 			ArrayList<Integer> listeZip = new ArrayList<Integer>();
 			try{
-				for(TestPerson person : listePersonen) {
+				for(TestPerson person : inputListePersonen) {
 					if(!listeZip.contains(person.getZip())) {             	// Bedingung: zip wird als primary key verwendet und muss daher eindeutig sein
 					preparedStatement.setInt(1, person.getZip());			// Mehrfaches Vorkommen wird in DIESEM FALL ignoriert und der Datensatz übersprungen
 					preparedStatement.setString(2, person.getCity());    	// Folglich wird hier immer	die city und der state des ersten Vorkommens in der Liste übernommen
@@ -318,8 +321,8 @@ public class Datenbank {
 			
 			verbindungHerstellen();
 			
-			String stmt = "SELECT * FROM (table_seq INNER JOIN table_persons ON table_seq.p_id = table_persons.p_id) "
-										+ "INNER JOIN table_zip ON table_persons.p_zip = table_zip.zip";
+			String stmt = "SELECT * FROM (normalform3.table_seq INNER JOIN normalform3.table_persons ON normalform3.table_seq.p_id = normalform3.table_persons.p_id) "
+										+ "INNER JOIN normalform3.table_zip ON normalform3.table_persons.p_zip = normalform3.table_zip.zip";
 			
 			PreparedStatement preparedStmt = conn.prepareStatement(stmt);
 			ResultSet rs = preparedStmt.executeQuery();			

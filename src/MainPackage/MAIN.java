@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.apache.logging.log4j.message.Message;
@@ -19,7 +20,7 @@ import org.postgresql.util.PSQLException;
 public class Main {	
 	
 	// main Methode
-	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidFormatException, SQLException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidFormatException, SQLException, ParseException {
 		
 		System.out.println("\nDas Programm startet...\n");	
 		
@@ -30,12 +31,18 @@ public class Main {
 		// Erstelle ArrayList für die Testpersonen
 		ArrayList<TestPerson> listeTestPersonen = new ArrayList<TestPerson>();	
 		
-		
+		// Schreibe Testpersonen als Objekte in Liste
 		Datenbank inputDatenbank = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
-		inputDatenbank.schreibeTestPersonenNormalform3InObjekte(listeTestPersonen);
+		inputDatenbank.schreibeTestPersonenNormalform3InObjekte(listeTestPersonen);		
 		
-		ExcelDatei outputExcel = new ExcelDatei(properties.getDefaultIO_xlsx(), "OUTPUT_testpersonen_norm3", "test_mappe" );
-		outputExcel.schreibeTestPersonenInExcelNormalform3(listeTestPersonen);
+		Datenbank outputDatenbank = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
+		outputDatenbank.fuehre1StatementAus("DELETE FROM normalform1.table_seq");
+		outputDatenbank.schreibeTestPersonenInDatenbankNormalform1(listeTestPersonen);
+		
+		
+		
+//		ExcelDatei outputExcel = new ExcelDatei(properties.getDefaultIO_xlsx(), "OUTPUT_testpersonen_norm3", "test_mappe" );
+//		outputExcel.schreibeTestPersonenInExcelNormalform3(listeTestPersonen);
 		
 		
 		

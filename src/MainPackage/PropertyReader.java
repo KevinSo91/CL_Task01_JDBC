@@ -7,6 +7,10 @@ import java.util.Properties;
 
 public class PropertyReader {
 	
+	private String dbDefaultUrl;
+	private String dbDefaultUser;
+	private String dbDefaultPassword;
+	
 	private String dbTestPersonenUrl;
 	private String dbTestPersonenUser;
 	private String dbTestPersonenPassword;
@@ -29,6 +33,10 @@ public class PropertyReader {
 			//Lade Property Datei
 			prop.load(input);
 			
+			this.dbDefaultUrl=prop.getProperty("dbDefult.url");
+			this.dbDefaultUser=prop.getProperty("dbDefault.user");
+			this.dbDefaultPassword=prop.getProperty("dbDefault.password");
+			
 			this.dbTestPersonenUrl = prop.getProperty("dbTestPersonen.url");
 			this.dbTestPersonenUser = prop.getProperty("dbTestPersonen.user");
 			this.dbTestPersonenPassword = prop.getProperty("dbTestPersonen.password");
@@ -47,7 +55,17 @@ public class PropertyReader {
 		}
 		
 		
-	}	
+	}
+	
+	public String getDB_URL_Defult_DB() {
+		return this.dbDefaultUrl;
+	}
+	public String getDB_USER_Default_DB() {
+		return this.dbDefaultUser;
+	}
+	public String getDB_PASS_Default_DB() {
+		return this.dbDefaultPassword;
+	}
 	
 	public String getDB_URL_testpersonen_DB() {
 		return this.dbTestPersonenUrl;

@@ -1,7 +1,13 @@
 package mainPackage;
 
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+//import java.sql.Date;
+import java.util.Locale;
 
 import org.postgresql.core.Parser;
 
@@ -68,14 +74,37 @@ public class TestPerson {
 	public int getZip() {
 		return this.zip;
 	}
+	
 	public String getDollar() {
 		return this.dollar;
 	}
+	public Float getDollarFloat() {
+		return Float.parseFloat(this.dollar.substring(1));
+	}
+	
 	public String getPick() {
 		return this.pick;
 	}
+	
 	public String getDate() {
 		return this.date;
+	}
+	public String getDateUS() {
+		String[] dateArr = this.date.split("/");
+		String dateUS = dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
+		return dateUS;		
+	}
+	public LocalDate getDateDateFormat() throws ParseException {
+		
+		String[] dateArr = this.date.split("/");
+		String dateFormat = dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
+		LocalDate localDate = LocalDate.parse(dateFormat);
+		
+//		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+//		String dateInString = this.date;
+//		Date date = formatter.parse(dateInString);
+		
+		return localDate;
 	}
 	
 	public void setSeq(int seq) {
