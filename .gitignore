@@ -1,1 +1,2 @@
-src/config/config*
+bin/config/config.properties
+src/config/config.properties
