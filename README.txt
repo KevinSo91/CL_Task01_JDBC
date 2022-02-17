@@ -1,0 +1,1 @@
+Füge in der Datei 'src/config/config.properties' die entsprechenden Daten für die lokale Datenbank ein.
