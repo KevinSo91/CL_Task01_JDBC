@@ -146,8 +146,8 @@ public class Main {
 		
 				
 		// Erzeuge Datei mit Testdaten
-		TextDatei testdatei = new TextDatei(properties.getDefaultIO_txt(), "OUTPUT_Personen");
-		testdatei.schreibeTestdaten(300);
+//		TextDatei testdatei = new TextDatei(properties.getDefaultIO_txt(), "OUTPUT_Personen");
+//		testdatei.schreibeTestdaten(300);
 //		
 //		// ArrayList für die Objekten deklarieren		
 //		ArrayList<Person> listePersonen = new ArrayList<Person>();
