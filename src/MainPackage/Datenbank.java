@@ -244,7 +244,7 @@ public class Datenbank {
 		
 
 		// Methode um TestPersonen aus Datenbank(Normalisiert) als Objekte in Liste zu schreiben
-		public void schreibeTestPersonenNormalform3InObjekte(ArrayList<TestPerson> outputListeTestPersonen) {
+		public void leseTestPersonenAusDbNormalform3(ArrayList<TestPerson> outputListeTestPersonen) {
 			
 			verbindungHerstellen();
 			

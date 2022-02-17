@@ -33,14 +33,14 @@ public class Main {
 		
 		// Schreibe Testpersonen als Objekte in Liste
 		Datenbank inputDatenbank = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
-		inputDatenbank.schreibeTestPersonenNormalform3InObjekte(listeTestPersonen);		
+		inputDatenbank.leseTestPersonenAusDbNormalform3(listeTestPersonen);		
 		
 		Datenbank outputDatenbank = new Datenbank(properties.getDB_URL_testpersonen_DB(), properties.getDB_USER_testpersonen_DB(), properties.getDB_PASS_testpersonen_DB());
 		outputDatenbank.fuehre1StatementAus("DELETE FROM normalform1.table_seq");
 		outputDatenbank.schreibeTestPersonenInDatenbankNormalform1(listeTestPersonen);
 		
 		TextDatei textdatei = new TextDatei(properties.getDefaultIO_txt(), "OUTPUT_testpersonen");
-		textdatei.schreibeTestPersonenInTxtDatei(listeTestPersonen);
+		textdatei.schreibeTestPersonen(listeTestPersonen);
 		
 		
 //		ExcelDatei outputExcel = new ExcelDatei(properties.getDefaultIO_xlsx(), "OUTPUT_testpersonen_norm3", "test_mappe" );

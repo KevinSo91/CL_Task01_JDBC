@@ -36,7 +36,7 @@ public class TextDatei {
 		return this.txtFile;
 	}
 	
-	public void schreibeTestdaten(int anzahlZeilen) {
+	public void erzeugeTestdatenPersonen(int anzahlZeilen) {
 		FileWriter fileWriter;
 		BufferedWriter bufferedWriter;
 		try {
@@ -56,31 +56,31 @@ public class TextDatei {
 		}
 	}
 	
-	public static void erzeugeTestdatenTxtDatei(File datei, int anzahlZeilen) {		
-		
-		try {
-			//FileWriter writer = new FileWriter(datei, /*append:*/true); // -> Datei erweitern
-			FileWriter writer = new FileWriter(datei);    // -> Datei überschreiben
-			BufferedWriter bufferedWriter = new BufferedWriter(writer);
-			// Schreibe in jede Zeile eine Person mit zufälligem Alter zwischen 18(inklusiv) und 68(exklusiv)
-			for(int i = 0; i < anzahlZeilen; i++) {
-				// Zufälliges Alter erzeugen
-				Random random = new Random();
-				int zufallAlter = random.nextInt(68-18)+18; // (max(exklusiv)-min(inklusiv))-min
-				String zeile = "Vorname" + i  + " Nachname" + i + " " + zufallAlter + "\n";
-				bufferedWriter.write(zeile);
-			}
-			bufferedWriter.close();
-			writer.close();
-			
-		} catch (IOException e) {
-			System.out.println("Es ist ein Fehler bei der Erzeugung der Testdatei aufgetreten");
-			e.printStackTrace();
-		}
-		
-	}// ENDE Methode erzeugeTestdaten_txtDatei()
+//	public static void erzeugeTestdatenPersonenInDatei(File datei, int anzahlZeilen) {		
+//		
+//		try {
+//			//FileWriter writer = new FileWriter(datei, /*append:*/true); // -> Datei erweitern
+//			FileWriter writer = new FileWriter(datei);    // -> Datei überschreiben
+//			BufferedWriter bufferedWriter = new BufferedWriter(writer);
+//			// Schreibe in jede Zeile eine Person mit zufälligem Alter zwischen 18(inklusiv) und 68(exklusiv)
+//			for(int i = 0; i < anzahlZeilen; i++) {
+//				// Zufälliges Alter erzeugen
+//				Random random = new Random();
+//				int zufallAlter = random.nextInt(68-18)+18; // (max(exklusiv)-min(inklusiv))-min
+//				String zeile = "Vorname" + i  + " Nachname" + i + " " + zufallAlter + "\n";
+//				bufferedWriter.write(zeile);
+//			}
+//			bufferedWriter.close();
+//			writer.close();
+//			
+//		} catch (IOException e) {
+//			System.out.println("Es ist ein Fehler bei der Erzeugung der Testdatei aufgetreten");
+//			e.printStackTrace();
+//		}
+//		
+//	}// ENDE Methode erzeugeTestdaten_txtDatei()
 	
-	public void schreibePersonenInObjekte(ArrayList<Person> outputArrayList) {
+	public void lesePersonen(ArrayList<Person> outputArrayList) {
 	// lese TXT Datei ein und (Objekt 'testdaten') ein und übertrage die Daten in ein ArrayListe von Objekte
 			try {
 				// erstelle FileReader / Buffered Reader Objekt
@@ -119,7 +119,7 @@ public class TextDatei {
 			}// ENDE schreibePersonenInObjekte()
 	
 	
-	public void schreibeTestPersonenInTxtDatei(ArrayList<TestPerson> inputListeTestPersonen) throws IOException {
+	public void schreibeTestPersonen(ArrayList<TestPerson> inputListeTestPersonen) throws IOException {
 		try {
 			FileWriter writer = new FileWriter(this.txtFile);
 			BufferedWriter buffWriter = new BufferedWriter(writer);

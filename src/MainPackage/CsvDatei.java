@@ -32,7 +32,7 @@ public class CsvDatei {
 		//******************************************* Methoden ***************************************************
 	
 		
-		public void schreibeTestPersonenInCsvDatei(ArrayList<TestPerson> inputArrayList) throws IOException {
+		public void schreibeTestPersonen(ArrayList<TestPerson> inputArrayList) throws IOException {
 			
 			FileWriter writer = new FileWriter(this.csvFile);
 			BufferedWriter buffWriter = new BufferedWriter(writer);
@@ -54,7 +54,7 @@ public class CsvDatei {
 			System.out.println("\nDaten wurden erfolgreich in CSV-Datei geschrieben!\n");
 		}
 		
-		public void schreibeTestPersonenInObjekte(ArrayList<TestPerson> outputArrayList) throws IOException, NumberFormatException {
+		public void leseTestPersonen(ArrayList<TestPerson> outputArrayList) throws IOException, NumberFormatException {
 			
 			FileReader reader = new FileReader(this.csvFile);
 			BufferedReader buffReader = new BufferedReader(reader);

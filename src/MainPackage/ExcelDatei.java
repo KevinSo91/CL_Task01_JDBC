@@ -39,7 +39,7 @@ public class ExcelDatei {
 	//******************************************* Methoden ***************************************************
 	
 	
-	public static void schreibePersonenInExcel (ArrayList<Person> inputListePersonen, String outputExcelDateiPfad, String outputExcelDateiName, String tabelle) throws FileNotFoundException, IOException {
+	public static void schreibePersonen (ArrayList<Person> inputListePersonen, String outputExcelDateiPfad, String outputExcelDateiName, String tabelle) throws FileNotFoundException, IOException {
 		
 		System.out.println("Erstelle Excel-Datei...");
 		
@@ -74,7 +74,7 @@ public class ExcelDatei {
 	}// ENDE schreibePersonenInExcel()
 	
 	
-	public static void schreibeTestPersonenInExcel (ArrayList<TestPerson> inputListeTestPersonen, String outputExcelDateiPfad, String outputExcelDateiName, String tabelleName) throws FileNotFoundException, IOException {
+	public static void schreibeTestPersonen (ArrayList<TestPerson> inputListeTestPersonen, String outputExcelDateiPfad, String outputExcelDateiName, String tabelleName) throws FileNotFoundException, IOException {
 		
 		System.out.println("Erstelle Excel-Datei...");
 		
@@ -123,7 +123,7 @@ public class ExcelDatei {
 	}// ENDE schreibeTestPersonenInExcel()
 	
 	
-	public void schreibeTestPersonenInExcelNormalform3 (ArrayList<TestPerson> inputListeTestPersonen) throws FileNotFoundException, IOException {
+	public void schreibeTestPersonenNormalform3 (ArrayList<TestPerson> inputListeTestPersonen) throws FileNotFoundException, IOException {
 		
 		System.out.println("Erstelle Excel-Datei...");
 		
@@ -206,7 +206,7 @@ public class ExcelDatei {
 	}// ENDE schreibeTestPersonenInExcel()
 	
 	
-	public static void lesePersonenAusExcel (String inputExcelDateiPfad, String inputExcelDateiName, String inputTabelle , ArrayList<Person> outputListePersonen) throws InvalidFormatException, IOException {
+	public static void lesePersonen (String inputExcelDateiPfad, String inputExcelDateiName, String inputTabelle , ArrayList<Person> outputListePersonen) throws InvalidFormatException, IOException {
 		
 		// Erstelle Objekt für die Datei
 		File excelDatei = new File(inputExcelDateiPfad + inputExcelDateiName);

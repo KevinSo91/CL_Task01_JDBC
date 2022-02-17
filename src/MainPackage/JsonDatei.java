@@ -44,7 +44,7 @@ public class JsonDatei {
 	}
 	
 	
-	public void schreibeTestPersonenInObjekte(ArrayList<TestPerson> outputArrayList) throws UnsupportedEncodingException, IOException {
+	public void leseTestPersonen(ArrayList<TestPerson> outputArrayList) throws UnsupportedEncodingException, IOException {
 		
 		System.out.println("\nSchreibe Test-Personen in Objekte...\n");
 		
@@ -82,7 +82,7 @@ public class JsonDatei {
 		
 	}// ENDE schreibeTestPersonenInObjekte()
 	
-	public static void schreibeTestPersonenInJsonDatei(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) throws IOException {
+	public static void schreibeTestPersonen(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) throws IOException {
 		
 		// Erstelle Output-Datei (Objekt) und BufferedWriter
 		File outputDatei = new File(outputDateiPfad + "\\" + outputDateiName + ".json");
@@ -141,7 +141,7 @@ public class JsonDatei {
 				
 	}// ENDE schreibeTestPersonenInJsonDatei()
 	
-	public static void schreibeTestPersonenInJsonDateiGsonGeordnet(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) throws IOException {
+	public static void schreibeTestPersonenGsonGeordnet(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) throws IOException {
 		
 		// Erstelle Output-Datei (Objekt) und BufferedWriter
 		File outputDatei = new File(outputDateiPfad + "\\" + outputDateiName + ".json");
