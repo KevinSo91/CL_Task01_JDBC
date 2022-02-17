@@ -36,21 +36,27 @@ public class TextDatei {
 		return this.txtFile;
 	}
 	
-	public void schreibeTestdaten(int anzahlZeilen) throws IOException {
-		FileWriter fileWriter = new FileWriter(this.txtFile);
-		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		for(int i = 0; i < anzahlZeilen; i++ ) {
-			Random random = new Random();
-			int zufallAlter = random.nextInt(68-18)+18; // (max(exklusiv)-min(inklusiv))-min
-			String zeile = "Vorname" + i  + " Nachname" + i + " " + zufallAlter + "\n";
-			bufferedWriter.write(zeile);
+	public void schreibeTestdaten(int anzahlZeilen) {
+		FileWriter fileWriter;
+		BufferedWriter bufferedWriter;
+		try {
+			fileWriter = new FileWriter(this.txtFile);
+			bufferedWriter = new BufferedWriter(fileWriter);
+			for(int i = 0; i < anzahlZeilen; i++ ) {
+				Random random = new Random();
+				int zufallAlter = random.nextInt(68-18)+18; // (max(exklusiv)-min(inklusiv))-min
+				String zeile = "Vorname" + i  + " Nachname" + i + " " + zufallAlter + "\n";
+				bufferedWriter.write(zeile);
+			}
+			bufferedWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		bufferedWriter.close();
-		fileWriter.close();
 	}
 	
-	public static void erzeugeTestdatenTxtDatei(File datei, int anzahlZeilen) {
-		
+	public static void erzeugeTestdatenTxtDatei(File datei, int anzahlZeilen) {		
 		
 		try {
 			//FileWriter writer = new FileWriter(datei, /*append:*/true); // -> Datei erweitern
@@ -94,6 +100,7 @@ public class TextDatei {
 					outputArrayList.add(new Person(vorname, nachname, alter));
 					i++;
 				}
+				
 				fileReader.close();
 				bufferedReader.close();
 				
@@ -104,13 +111,32 @@ public class TextDatei {
 			} catch (IOException e) {			
 				e.printStackTrace();
 			}
-			
-			
+						
 			// Gib die Attribute der einzelnen Objekte in 'listePersonen' in der Konsole aus
 			System.out.println("Ausgabe der Objekte in 'listePersonen':\n");
 			outputArrayList.forEach((person) -> person.infoAusgeben());
 	
 			}// ENDE schreibePersonenInObjekte()
 	
+	
+	public void schreibeTestPersonenInTxtDatei(ArrayList<TestPerson> inputListeTestPersonen) throws IOException {
+		try {
+			FileWriter writer = new FileWriter(this.txtFile);
+			BufferedWriter buffWriter = new BufferedWriter(writer);
+			
+			for(TestPerson person : inputListeTestPersonen) {				
+				buffWriter.write(person.infoAusgebenString() + "\n");
+			}
+			
+			buffWriter.close();
+			writer.close();			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e){
+			e.printStackTrace();
+		}			
+	}
 
-}// ENDE Klasse Input_Output_txt
+}// ENDE Klasse TextDatei

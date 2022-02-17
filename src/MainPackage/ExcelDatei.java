@@ -35,7 +35,7 @@ public class ExcelDatei {
 		//this.fileLocationAndName = fileLocation + "\\" + fileName;
 		this.xlsxFile = new File(this.fileLocation, this.fileName);
 	}
-		
+	
 	//******************************************* Methoden ***************************************************
 	
 	

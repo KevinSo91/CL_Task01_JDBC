@@ -152,6 +152,4 @@ public class TestPerson {
 	}
 	
 	
-	
-
-}
+} // ENDE Klasse TextPerson
