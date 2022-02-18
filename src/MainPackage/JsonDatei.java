@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
@@ -44,11 +45,20 @@ public class JsonDatei {
 	}
 	
 	
-	public void leseTestPersonen(ArrayList<TestPerson> outputArrayList) throws UnsupportedEncodingException, IOException {
+	public void leseTestPersonen(ArrayList<TestPerson> outputArrayList) {
 		
 		System.out.println("\nSchreibe Test-Personen in Objekte...\n");
 		
-		String Inhalt = new String(Files.readAllBytes(Paths.get(jsonFile.toURI())), "UTF-8");
+		String Inhalt = null;
+		try {
+			Inhalt = new String(Files.readAllBytes(Paths.get(jsonFile.toURI())), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		JSONObject jsonObjectPersonen = new JSONObject(Inhalt);		
 		System.out.println("\nJSON-Objekt erstellt!\n");
@@ -73,8 +83,7 @@ public class JsonDatei {
 			String pick = jsonObjectPerson.getString("pick");
 			String date = jsonObjectPerson.getString("date");
 						
-			outputArrayList.add(new TestPerson(seq, firstName, lastName, age, street, city, state, zip, dollar, pick, date));
-			
+			outputArrayList.add(new TestPerson(seq, firstName, lastName, age, street, city, state, zip, dollar, pick, date));			
 		}
 		
 		System.out.println("\nListe erfolgreich erstellt!\n");
@@ -82,118 +91,134 @@ public class JsonDatei {
 		
 	}// ENDE schreibeTestPersonenInObjekte()
 	
-	public static void schreibeTestPersonen(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) throws IOException {
+	public static void schreibeTestPersonen(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) {
 		
-		// Erstelle Output-Datei (Objekt) und BufferedWriter
-		File outputDatei = new File(outputDateiPfad + "\\" + outputDateiName + ".json");
-		FileWriter filewriter = new FileWriter(outputDatei);
-		BufferedWriter buffWriter = new BufferedWriter(filewriter);
-		
-		// Erstelle Array für alle Testpersonen
-		JSONArray jsonArrayTestPersonen = new JSONArray();
-		
-		// Lese Testpersonen aus Input Liste und erstelle jeweils ein JSON-Objekt
-		for(TestPerson testperson: inputArrayList) {
+		try {
+			// Erstelle Output-Datei (Objekt) und BufferedWriter
+			File outputDatei = new File(outputDateiPfad + "\\" + outputDateiName + ".json");
+			FileWriter filewriter = new FileWriter(outputDatei);
+			BufferedWriter buffWriter = new BufferedWriter(filewriter);
 			
-			// Erstelle JSON-Objekt für die Person
-			JSONObject jsonObjectTestPerson = new JSONObject();
+			// Erstelle Array für alle Testpersonen
+			JSONArray jsonArrayTestPersonen = new JSONArray();
 			
-			// Füge Wertpaare zum JSON-Objekt hinzu
-			jsonObjectTestPerson.put("seq", testperson.getSeq());
-						
-			// Erstelle JSON-Objekt für Vor- und Nachname
-			JSONObject jsonObjectName = new JSONObject();
-			jsonObjectName.put("first", testperson.getFirstName());			
-			jsonObjectName.put("last", testperson.getLastName());			
+			// Lese Testpersonen aus Input Liste und erstelle jeweils ein JSON-Objekt
+			for(TestPerson testperson: inputArrayList) {
+				
+				// Erstelle JSON-Objekt für die Person
+				JSONObject jsonObjectTestPerson = new JSONObject();
+				
+				// Füge Wertpaare zum JSON-Objekt hinzu
+				jsonObjectTestPerson.put("seq", testperson.getSeq());
+							
+				// Erstelle JSON-Objekt für Vor- und Nachname
+				JSONObject jsonObjectName = new JSONObject();
+				jsonObjectName.put("first", testperson.getFirstName());			
+				jsonObjectName.put("last", testperson.getLastName());			
+				
+				jsonObjectTestPerson.put("name", jsonObjectName);
+				jsonObjectTestPerson.put("age", testperson.getAge());
+				jsonObjectTestPerson.put("street", testperson.getStreet());
+				jsonObjectTestPerson.put("city", testperson.getCity());
+				jsonObjectTestPerson.put("state", testperson.getState());
+				jsonObjectTestPerson.put("zip", testperson.getZip());
+				jsonObjectTestPerson.put("dollar", testperson.getDollar());
+				jsonObjectTestPerson.put("pick", testperson.getPick());
+				jsonObjectTestPerson.put("date", testperson.getDate());			
+				
+				System.out.println(jsonObjectTestPerson);
+				
+				// Füge JSON-Objekt einer Person in das JSON-Array für alle Testpersonen ein
+				jsonArrayTestPersonen.put(jsonObjectTestPerson);						
+			}
 			
-			jsonObjectTestPerson.put("name", jsonObjectName);
-			jsonObjectTestPerson.put("age", testperson.getAge());
-			jsonObjectTestPerson.put("street", testperson.getStreet());
-			jsonObjectTestPerson.put("city", testperson.getCity());
-			jsonObjectTestPerson.put("state", testperson.getState());
-			jsonObjectTestPerson.put("zip", testperson.getZip());
-			jsonObjectTestPerson.put("dollar", testperson.getDollar());
-			jsonObjectTestPerson.put("pick", testperson.getPick());
-			jsonObjectTestPerson.put("date", testperson.getDate());			
+			// Schreibe alle Elemente des JSON-Arrays in eine JSON-Datei. 1 Zeile = 1 Datensatz(Objekt). (Füge [] hinzu, um die Objekte als Array darzustellen)
+			buffWriter.write("[\n");		
+			int i = 0;		
+			while(i < (jsonArrayTestPersonen.length()-1)) {
+				
+				buffWriter.write(jsonArrayTestPersonen.getJSONObject(i).toString() + ",\n");
+				i++;
+			}
+			buffWriter.write(jsonArrayTestPersonen.getJSONObject(i).toString() + "\n]");
 			
-			System.out.println(jsonObjectTestPerson);
+			buffWriter.close();	
 			
-			// Füge JSON-Objekt einer Person in das JSON-Array für alle Testpersonen ein
-			jsonArrayTestPersonen.put(jsonObjectTestPerson);						
+			// Test: Name als JSON-Objekt
+			System.out.println(jsonArrayTestPersonen.getJSONObject(0).getJSONObject("name").getString("first"));
+			System.out.println(jsonArrayTestPersonen.getJSONObject(1).getJSONObject("name").getString("last"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		// Schreibe alle Elemente des JSON-Arrays in eine JSON-Datei. 1 Zeile = 1 Datensatz(Objekt). (Füge [] hinzu, um die Objekte als Array darzustellen)
-		buffWriter.write("[\n");		
-		int i = 0;		
-		while(i < (jsonArrayTestPersonen.length()-1)) {
-			
-			buffWriter.write(jsonArrayTestPersonen.getJSONObject(i).toString() + ",\n");
-			i++;
-		}
-		buffWriter.write(jsonArrayTestPersonen.getJSONObject(i).toString() + "\n]");
-		
-		buffWriter.close();	
-		
-		// Test: Name als JSON-Objekt
-		System.out.println(jsonArrayTestPersonen.getJSONObject(0).getJSONObject("name").getString("first"));
-		System.out.println(jsonArrayTestPersonen.getJSONObject(1).getJSONObject("name").getString("last"));
 		
 				
 	}// ENDE schreibeTestPersonenInJsonDatei()
 	
-	public static void schreibeTestPersonenGsonGeordnet(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) throws IOException {
+	public static void schreibeTestPersonenGsonGeordnet(ArrayList<TestPerson> inputArrayList, String outputDateiPfad, String outputDateiName) {		
 		
-		// Erstelle Output-Datei (Objekt) und BufferedWriter
-		File outputDatei = new File(outputDateiPfad + "\\" + outputDateiName + ".json");
-		FileWriter filewriter = new FileWriter(outputDatei);
-		BufferedWriter buffWriter = new BufferedWriter(filewriter);
-		
-		// Erstelle Array für alle Testpersonen
-		JSONArray jsonArrayTestPersonen = new JSONArray();
-		
-		// Lese Testpersonen aus Input Liste und erstelle jeweils ein JSON-Objekt
-		for(TestPerson testperson: inputArrayList) {
+		try {
+			// Erstelle Output-Datei (Objekt) und BufferedWriter
+			File outputDatei = new File(outputDateiPfad + "\\" + outputDateiName + ".json");
+			FileWriter filewriter = new FileWriter(outputDatei);
+			BufferedWriter buffWriter = new BufferedWriter(filewriter);
 			
-			// Erstelle JSON-Objekt für die Person
-			JsonObject jsonObjectTestPerson = new JsonObject();
+			// Erstelle Array für alle Testpersonen
+			JSONArray jsonArrayTestPersonen = new JSONArray();
 			
-			// Füge Wertpaare zum JSON-Objekt hinzu
-			jsonObjectTestPerson.addProperty("seq", testperson.getSeq());			
+			// Lese Testpersonen aus Input Liste und erstelle jeweils ein JSON-Objekt
+			for(TestPerson testperson: inputArrayList) {
+				
+				// Erstelle JSON-Objekt für die Person
+				JsonObject jsonObjectTestPerson = new JsonObject();
+				
+				// Füge Wertpaare zum JSON-Objekt hinzu
+				jsonObjectTestPerson.addProperty("seq", testperson.getSeq());			
+				
+				// Erstelle JSON-Objekt für Vor- und Nachname
+				JsonObject jsonObjectName = new JsonObject();
+				jsonObjectName.addProperty("first", testperson.getFirstName());			
+				jsonObjectName.addProperty("last", testperson.getLastName());			
+				
+				jsonObjectTestPerson.add("name", new Gson().toJsonTree(jsonObjectName));
+				
+				//jsonObjectTestPerson.add("name", jsonObjectName);
+				jsonObjectTestPerson.addProperty("age", testperson.getAge());
+				jsonObjectTestPerson.addProperty("street", testperson.getStreet());
+				jsonObjectTestPerson.addProperty("city", testperson.getCity());
+				jsonObjectTestPerson.addProperty("state", testperson.getState());
+				jsonObjectTestPerson.addProperty("zip", testperson.getZip());
+				jsonObjectTestPerson.addProperty("dollar", testperson.getDollar());
+				jsonObjectTestPerson.addProperty("pick", testperson.getPick());
+				jsonObjectTestPerson.addProperty("date", testperson.getDate());
+				
+				// Überprüfung in der Konsole:
+				System.out.println(jsonObjectTestPerson);
+				
+				// Füge JSON-Objekt einer Person in das JSON-Array für alle Testpersonen ein
+				jsonArrayTestPersonen.put(jsonObjectTestPerson);						
+			}
 			
-			// Erstelle JSON-Objekt für Vor- und Nachname
-			JsonObject jsonObjectName = new JsonObject();
-			jsonObjectName.addProperty("first", testperson.getFirstName());			
-			jsonObjectName.addProperty("last", testperson.getLastName());			
+			buffWriter.write("[\n");		
+			int i = 0;		
+			while(i < (jsonArrayTestPersonen.length()-1)) {
+				
+				buffWriter.write(jsonArrayTestPersonen.get(i).toString() + ",\n");
+				i++;
+			}
+			buffWriter.write(jsonArrayTestPersonen.get(i).toString() + "\n]");
 			
-			jsonObjectTestPerson.add("name", new Gson().toJsonTree(jsonObjectName));
-			
-			//jsonObjectTestPerson.add("name", jsonObjectName);
-			jsonObjectTestPerson.addProperty("age", testperson.getAge());
-			jsonObjectTestPerson.addProperty("street", testperson.getStreet());
-			jsonObjectTestPerson.addProperty("city", testperson.getCity());
-			jsonObjectTestPerson.addProperty("state", testperson.getState());
-			jsonObjectTestPerson.addProperty("zip", testperson.getZip());
-			jsonObjectTestPerson.addProperty("dollar", testperson.getDollar());
-			jsonObjectTestPerson.addProperty("pick", testperson.getPick());
-			jsonObjectTestPerson.addProperty("date", testperson.getDate());
-			
-			// Überprüfung in der Konsole:
-			System.out.println(jsonObjectTestPerson);
-			
-			// Füge JSON-Objekt einer Person in das JSON-Array für alle Testpersonen ein
-			jsonArrayTestPersonen.put(jsonObjectTestPerson);						
+			buffWriter.close();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		buffWriter.write("[\n");		
-		int i = 0;		
-		while(i < (jsonArrayTestPersonen.length()-1)) {
-			
-			buffWriter.write(jsonArrayTestPersonen.get(i).toString() + ",\n");
-			i++;
-		}
-		buffWriter.write(jsonArrayTestPersonen.get(i).toString() + "\n]");
-		
-		buffWriter.close();	
 				
 	}// ENDE schreibeTestPersonenInJsonDatei()
 	

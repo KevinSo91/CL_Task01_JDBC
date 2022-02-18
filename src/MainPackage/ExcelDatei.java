@@ -24,8 +24,7 @@ public class ExcelDatei {
 	private final String fileName;
 	//private final String fileLocationAndName;
 	private final File xlsxFile;
-	private Workbook workbook;
-		
+	private Workbook workbook;		
 		
 	//***************************************** Konstruktoren ***********************************************
 		
@@ -37,8 +36,7 @@ public class ExcelDatei {
 	}
 	
 	//******************************************* Methoden ***************************************************
-	
-	
+		
 	public static void schreibePersonen (ArrayList<Person> inputListePersonen, String outputExcelDateiPfad, String outputExcelDateiName, String tabelle) throws FileNotFoundException, IOException {
 		
 		System.out.println("Erstelle Excel-Datei...");

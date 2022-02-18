@@ -9,14 +9,14 @@ public class PropertyWriter {
 
 	public static void main(String[] args) {
 		
-		try (OutputStream output = new FileOutputStream("C:\\Users\\user1\\eclipse-workspace\\Task01_JDBC\\src\\config\\config.properties")){
+		try (OutputStream output = new FileOutputStream("")){
 			
 			Properties prop = new Properties();
 			
 			// Setze die Property Werte
-			prop.setProperty("dbPersonen.url", "jdbc:postgresql://localhost:5432/java_connection_DB");
-			prop.setProperty("dbPersonen.user", "postgres");
-			prop.setProperty("dbPersonen.password", "passwort");
+			prop.setProperty("dbPersonen.url", "");
+			prop.setProperty("dbPersonen.user", "");
+			prop.setProperty("dbPersonen.password", "");
 			
 			// Speichere Properties
 			prop.store(output, null);

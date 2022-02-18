@@ -39,8 +39,8 @@ public class Main {
 		outputDatenbank.fuehre1StatementAus("DELETE FROM normalform1.table_seq");
 		outputDatenbank.schreibeTestPersonenInDatenbankNormalform1(listeTestPersonen);
 		
-		TextDatei textdatei = new TextDatei(properties.getDefaultIO_txt(), "OUTPUT_testpersonen");
-		textdatei.schreibeTestPersonen(listeTestPersonen);
+		TextDatei outputTextdatei = new TextDatei(properties.getDefaultIO_txt(), "OUTPUT_testpersonen");
+		outputTextdatei.schreibeTestPersonen(listeTestPersonen);
 		
 		
 //		ExcelDatei outputExcel = new ExcelDatei(properties.getDefaultIO_xlsx(), "OUTPUT_testpersonen_norm3", "test_mappe" );

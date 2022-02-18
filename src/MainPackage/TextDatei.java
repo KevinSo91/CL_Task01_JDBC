@@ -103,7 +103,7 @@ public class TextDatei {
 				
 				fileReader.close();
 				bufferedReader.close();
-				
+			
 			} catch (FileNotFoundException e) {			
 				System.out.println("Datei nicht vorhanden");
 			} catch (NumberFormatException e) {			
